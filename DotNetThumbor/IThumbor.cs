@@ -10,6 +10,8 @@
 
         Thumbor Format(Thumbor.ImageFormat imageFormat);
 
+        Thumbor Crop(int topLeft, int topRight, int bottomLeft, int bottomRight);
+
         string ToUrl();
     }
 }

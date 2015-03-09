@@ -133,5 +133,14 @@
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:format({0})/http://localhost/image.jpg", format.ToString().ToLower()));
         }
 
+        [Test]
+        public void ThumborCrop()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Crop(0, 10, 50, 100)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/0x10:50x100/http://localhost/image.jpg");
+        }
     }
 }

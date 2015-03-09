@@ -14,6 +14,8 @@
 
         private ImageFormat outputFormat;
 
+        private string cropCoordinates;
+
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
@@ -63,6 +65,12 @@
             return this;
         }
 
+        public Thumbor Crop(int topLeft, int topRight, int bottomLeft, int bottomRight)
+        {
+            this.cropCoordinates = string.Format("{0}x{1}:{2}x{3}", topLeft, topRight, bottomLeft, bottomRight);
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -72,7 +80,12 @@
 
             var url = this.thumborServerUrl + "unsafe/";
 
-            if (this.resizeWidthAndHeight != null)
+            if (!string.IsNullOrEmpty(this.cropCoordinates))
+            {
+                url += this.cropCoordinates + "/";
+            }
+
+            if (!string.IsNullOrEmpty(this.resizeWidthAndHeight))
             {
                 url += this.resizeWidthAndHeight + "/";
             }
