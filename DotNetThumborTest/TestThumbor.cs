@@ -100,6 +100,26 @@
         }
 
         [Test]
+        public void ThumborResizeWidthNegativeFlip()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Resize(-10, null)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/-10x0/http://localhost/image.jpg");
+        }
+
+        [Test]
+        public void ThumborResizeHeightNegativeFlip()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Resize(null, -10)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/0x-10/http://localhost/image.jpg");
+        }
+
+        [Test]
         public void ThumborSmart()
         {
             var thumbor = new Thumbor("http://localhost/");
