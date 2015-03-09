@@ -12,6 +12,8 @@
 
         Thumbor Crop(int topLeft, int topRight, int bottomLeft, int bottomRight);
 
+        Thumbor Quality(int? quality);
+
         string ToUrl();
     }
 }

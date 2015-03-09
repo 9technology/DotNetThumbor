@@ -1,6 +1,7 @@
 ﻿namespace DotNetThumbor
 {
     using System;
+    using System.Collections.Generic;
 
     public class Thumbor : IThumbor
     {
@@ -15,6 +16,8 @@
         private ImageFormat outputFormat;
 
         private string cropCoordinates;
+
+        private int? quality;
 
         public Thumbor(string thumborServerUrl)
         {
@@ -71,6 +74,12 @@
             return this;
         }
 
+        public Thumbor Quality(int? quality)
+        {
+            this.quality = quality;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -95,10 +104,23 @@
                 url += "smart/";
             }
 
+            var filters = new List<string>();
             if (this.outputFormat != ImageFormat.None)
             {
-                url += string.Format("filters:format({0})/", this.outputFormat.ToString().ToLower());
+                filters.Add(string.Format("format({0})", this.outputFormat.ToString().ToLower()));
             }
+
+            if (this.quality != null)
+            {
+                filters.Add(string.Format("quality({0})", this.quality));
+            }
+
+            if (filters.Count != 0)
+            {
+                url += "filters:" + string.Join(":", filters) + "/";
+            }
+
+
 
             return string.Format("{0}{1}", url, this.imageUrl);
         }

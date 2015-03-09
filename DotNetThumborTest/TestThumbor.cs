@@ -162,5 +162,21 @@
                                     .ToUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/0x10:50x100/http://localhost/image.jpg");
         }
+
+        [Test]
+        [TestCase(-100)]
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(99)]
+        [TestCase(100)]
+        [TestCase(1000)]
+        public void ThumborQuality(int quality)
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Quality(quality)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:quality({0})/http://localhost/image.jpg", quality.ToString()));
+        }
     }
 }
