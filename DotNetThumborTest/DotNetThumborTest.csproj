@@ -65,13 +65,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetThumbor\DotNetThumbor.csproj">
-      <Project>{C27C34DB-373E-493C-AE2F-C267FA4EB661}</Project>
-      <Name>DotNetThumbor</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\DotNetThumbor\DotNetThumbor.csproj">
+      <Project>{c27c34db-373e-493c-ae2f-c267fa4eb661}</Project>
+      <Name>DotNetThumbor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
