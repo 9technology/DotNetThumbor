@@ -27,6 +27,8 @@
 
         private bool trim;
 
+        private string fitin;
+
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
@@ -117,6 +119,18 @@
             return this;
         }
 
+        public Thumbor FitIn(bool fitIn)
+        {
+            this.fitin = fitIn ? "fit-in" : string.Empty;
+            return this;
+        }
+
+        public Thumbor FullFitIn(bool fullFitIn)
+        {
+            this.fitin = fullFitIn ? "full-fit-in" : string.Empty;
+            return this;
+        }
+
         public override string ToString()
         {
             return this.ToUrl();
@@ -139,6 +153,11 @@
             if (!string.IsNullOrEmpty(this.cropCoordinates))
             {
                 url += this.cropCoordinates + "/";
+            }
+
+            if (!string.IsNullOrEmpty(this.fitin))
+            {
+                url += this.fitin + "/";
             }
 
             if (!string.IsNullOrEmpty(this.resizeWidthAndHeight))

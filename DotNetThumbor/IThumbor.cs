@@ -24,6 +24,10 @@
 
         Thumbor Trim(bool trimImage);
 
+        Thumbor FitIn(bool fitIn);
+
+        Thumbor FullFitIn(bool fullFitIn);
+
         string ToUrl();
     }
 }

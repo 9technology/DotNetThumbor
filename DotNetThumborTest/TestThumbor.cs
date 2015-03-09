@@ -345,6 +345,52 @@
         }
 
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ThumborFitIn(bool fitIn)
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .FitIn(fitIn)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/{0}http://localhost/image.jpg", fitIn ? "fit-in/" : string.Empty));
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ThumborFullFitIn(bool fullFitIn)
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .FullFitIn(fullFitIn)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/{0}http://localhost/image.jpg", fullFitIn ? "full-fit-in/" : string.Empty));
+        }
+
+        [Test]
+        public void ThumborFitInChangeToFullFitIn()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .FitIn(true)
+                                    .FullFitIn(true)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/full-fit-in/http://localhost/image.jpg");
+        }
+
+        [Test]
+        public void ThumborFitInRemoveUsingFullFitIn()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .FitIn(true)
+                                    .FullFitIn(false)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/http://localhost/image.jpg");
+        }
+
+        [Test]
         public void ThumborMultiTest()
         {
             var watermark = new Thumbor("http://localhost");
