@@ -8,6 +8,8 @@
 
         Thumbor Smart(bool beSmart);
 
+        Thumbor Format(Thumbor.ImageFormat imageFormat);
+
         string ToUrl();
     }
 }

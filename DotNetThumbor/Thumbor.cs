@@ -10,11 +10,22 @@
 
         private string resizeWidthAndHeight;
 
-        private bool beSmart;
+        private bool smartImage;
+
+        private ImageFormat outputFormat;
 
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
+        }
+
+        public enum ImageFormat
+        {
+            None,
+            Webp,
+            Jpeg,
+            Png,
+            Gif
         }
 
         public Thumbor BuildImage(string imageUrl)
@@ -40,9 +51,15 @@
             return this;
         }
 
-        public Thumbor Smart(bool beSmart)
+        public Thumbor Smart(bool smartImage)
         {
-            this.beSmart = beSmart;
+            this.smartImage = smartImage;
+            return this;
+        }
+
+        public Thumbor Format(ImageFormat imageFormat)
+        {
+            this.outputFormat = imageFormat;
             return this;
         }
 
@@ -60,9 +77,14 @@
                 url += this.resizeWidthAndHeight + "/";
             }
 
-            if (this.beSmart)
+            if (this.smartImage)
             {
                 url += "smart/";
+            }
+
+            if (this.outputFormat != ImageFormat.None)
+            {
+                url += string.Format("filters:format({0})/", this.outputFormat.ToString().ToLower());
             }
 
             return string.Format("{0}{1}", url, this.imageUrl);
