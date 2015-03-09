@@ -19,6 +19,8 @@
 
         private int? quality;
 
+        private bool grayscale;
+
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
@@ -80,6 +82,12 @@
             return this;
         }
 
+        public Thumbor Grayscale(bool grayscaleImage)
+        {
+            this.grayscale = grayscaleImage;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -113,6 +121,11 @@
             if (this.quality != null)
             {
                 filters.Add(string.Format("quality({0})", this.quality));
+            }
+
+            if (this.grayscale)
+            {
+                filters.Add("grayscale()");
             }
 
             if (filters.Count != 0)

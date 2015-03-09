@@ -178,5 +178,25 @@
                                     .ToUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:quality({0})/http://localhost/image.jpg", quality.ToString()));
         }
+
+        [Test]
+        public void ThumborGrayscale()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Grayscale(true)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:grayscale()/http://localhost/image.jpg"));
+        }
+
+        [Test]
+        public void ThumborNotGrayscale()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Grayscale(false)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
+        }
     }
 }
