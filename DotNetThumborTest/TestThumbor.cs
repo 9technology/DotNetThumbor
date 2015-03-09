@@ -140,6 +140,17 @@
         }
 
         [Test]
+        public void ThumborSmartIgnoresFirst()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Smart(false)
+                                    .Smart(true)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/smart/http://localhost/image.jpg");
+        }
+
+        [Test]
         [TestCase(Thumbor.ImageFormat.Jpeg)]
         [TestCase(Thumbor.ImageFormat.Png)]
         [TestCase(Thumbor.ImageFormat.Gif)]
@@ -154,10 +165,32 @@
         }
 
         [Test]
+        public void ThumborFormatIgnoresFirst()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Format(Thumbor.ImageFormat.Png)
+                                    .Format(Thumbor.ImageFormat.Gif)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/filters:format(gif)/http://localhost/image.jpg");
+        }
+
+        [Test]
         public void ThumborCrop()
         {
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Crop(0, 10, 50, 100)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/0x10:50x100/http://localhost/image.jpg");
+        }
+
+        [Test]
+        public void ThumborCropIgnoresFirst()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Crop(100, 200, 300, 400)
                                     .Crop(0, 10, 50, 100)
                                     .ToUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/0x10:50x100/http://localhost/image.jpg");
@@ -180,6 +213,17 @@
         }
 
         [Test]
+        public void ThumborQualitySetTwiceFirstIgnored()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Quality(10)
+                                    .Quality(99)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/filters:quality(99)/http://localhost/image.jpg");
+        }
+
+        [Test]
         public void ThumborGrayscale()
         {
             var thumbor = new Thumbor("http://localhost/");
@@ -194,6 +238,17 @@
         {
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Grayscale(false)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
+        }
+
+        [Test]
+        public void ThumborGrayscaleFirstIgnored()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Grayscale(true)
                                     .Grayscale(false)
                                     .ToUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
@@ -248,6 +303,17 @@
         }
 
         [Test]
+        public void ThumborFillingFirstIgnored()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Fill("blue")
+                                    .Fill("red")
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/filters:fill(red)/http://localhost/image.jpg");
+        }
+
+        [Test]
         public void ThumborTrim()
         {
             var thumbor = new Thumbor("http://localhost/");
@@ -265,6 +331,37 @@
                                     .Trim(false)
                                     .ToUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
+        }
+
+        [Test]
+        public void ThumborTrimIgnoresFirst()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Trim(true)
+                                    .Trim(false)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
+        }
+
+        [Test]
+        public void ThumborMultiTest()
+        {
+            var watermark = new Thumbor("http://localhost");
+            watermark.BuildImage(
+                "https://localhost/watermark.png");
+
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Trim(true)
+                                    .Resize(200, 400)
+                                    .Grayscale(false)
+                                    .Fill("blue")
+                                    .Quality(100)
+                                    .Watermark(watermark, 0, 10, 50)
+                                    .Smart(true)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/trim/200x400/smart/filters:quality(100):watermark(http://localhost/unsafe/https://localhost/watermark.png,0,10,50):fill(blue)/http://localhost/image.jpg"));
         }
     }
 }

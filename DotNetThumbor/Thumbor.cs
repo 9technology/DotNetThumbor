@@ -183,7 +183,6 @@
             }
 
 
-
             return string.Format("{0}{1}", url, this.imageUrl);
         }
 
