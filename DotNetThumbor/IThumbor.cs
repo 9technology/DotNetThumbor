@@ -6,6 +6,15 @@
 
         Thumbor Resize(int? width, int? height);
 
+        /// <summary>
+        /// The smart.
+        /// </summary>
+        /// <param name="smartImage">
+        /// The smart image.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Thumbor"/>.
+        /// </returns>
         Thumbor Smart(bool smartImage);
 
         Thumbor Format(Thumbor.ImageFormat imageFormat);
@@ -27,6 +36,10 @@
         Thumbor FitIn(bool fitIn);
 
         Thumbor FullFitIn(bool fullFitIn);
+
+        Thumbor HorizontalAlign(Thumbor.ImageHorizontalAlign align);
+
+        Thumbor VerticalAlign(Thumbor.ImageVerticalAlign align);
 
         string ToUrl();
     }

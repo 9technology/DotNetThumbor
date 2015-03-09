@@ -390,6 +390,29 @@
             resizedUrl.Should().Be("http://localhost/unsafe/http://localhost/image.jpg");
         }
 
+
+        [Test]
+        [TestCase(Thumbor.ImageHorizontalAlign.Left)]
+        [TestCase(Thumbor.ImageHorizontalAlign.Right)]
+        public void ThumborHorizontalAlign(Thumbor.ImageHorizontalAlign align)
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .HorizontalAlign(align)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/{0}/http://localhost/image.jpg", align.ToString().ToLower()));
+        }
+
+        [Test]
+        public void ThumborHorizontalAlignCenter()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .HorizontalAlign(Thumbor.ImageHorizontalAlign.Center)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/http://localhost/image.jpg");
+        }
+
         [Test]
         public void ThumborMultiTest()
         {

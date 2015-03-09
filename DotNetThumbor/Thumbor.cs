@@ -15,6 +15,8 @@
 
         private ImageFormat outputFormat;
 
+        private ImageHorizontalAlign horizontalAlign;
+
         private string cropCoordinates;
 
         private int? quality;
@@ -36,11 +38,66 @@
 
         public enum ImageFormat
         {
+            /// <summary>
+            /// The none.
+            /// </summary>
             None,
+
+            /// <summary>
+            /// The webp.
+            /// </summary>
             Webp,
+
+            /// <summary>
+            /// The jpeg.
+            /// </summary>
             Jpeg,
+
+            /// <summary>
+            /// The png.
+            /// </summary>
             Png,
+
+            /// <summary>
+            /// The gif.
+            /// </summary>
             Gif
+        }
+
+        public enum ImageHorizontalAlign
+        {
+            /// <summary>
+            /// The center.
+            /// </summary>
+            Center,
+
+            /// <summary>
+            /// The left.
+            /// </summary>
+            Left,
+
+            /// <summary>
+            /// The right.
+            /// </summary>
+            Right
+        }
+
+        public enum ImageVerticalAlign
+        {
+            /// <summary>
+            /// The middle.
+            /// </summary>
+            Middle,
+
+            /// <summary>
+            /// The top.
+            /// </summary>
+            Top,
+
+            /// <summary>
+            /// The bottom.
+            /// </summary>
+            Bottom
         }
 
         public Thumbor BuildImage(string imageUrl)
@@ -131,6 +188,17 @@
             return this;
         }
 
+        public Thumbor HorizontalAlign(ImageHorizontalAlign align)
+        {
+            this.horizontalAlign = align;
+            return this;
+        }
+
+        public Thumbor VerticalAlign(ImageVerticalAlign align)
+        {
+            return this;
+        }
+
         public override string ToString()
         {
             return this.ToUrl();
@@ -145,7 +213,7 @@
 
             var url = this.thumborServerUrl + "unsafe/";
 
-            if (trim)
+            if (this.trim)
             {
                 url += "trim/";
             }
@@ -163,6 +231,11 @@
             if (!string.IsNullOrEmpty(this.resizeWidthAndHeight))
             {
                 url += this.resizeWidthAndHeight + "/";
+            }
+
+            if (this.horizontalAlign != ImageHorizontalAlign.Center)
+            {
+                url += this.horizontalAlign.ToString().ToLower() + "/";
             }
 
             if (this.smartImage)
