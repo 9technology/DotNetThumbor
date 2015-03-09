@@ -8,6 +8,8 @@
 
         private Uri imageUrl;
 
+        private string resizeWidthAndHeight;
+
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
@@ -15,7 +17,24 @@
 
         public Thumbor BuildImage(string imageUrl)
         {
-            this.imageUrl = new Uri(imageUrl);
+            try
+            {
+                this.imageUrl = new Uri(imageUrl);
+            }
+            catch (UriFormatException ex)
+            {
+                throw new ArgumentException("Invalid URL", ex);
+            }
+
+            return this;
+        }
+
+        public Thumbor Resize(int? width, int? height)
+        {
+            width = width ?? 0;
+            height = height ?? 0;
+
+            this.resizeWidthAndHeight = width + "x" + height;
             return this;
         }
 
@@ -26,7 +45,16 @@
                 throw new InvalidOperationException("BuildImage must be called before ToUrl");
             }
 
-            return string.Format("{0}unsafe/{1}", this.thumborServerUrl, this.imageUrl);
+            var url = this.thumborServerUrl + "unsafe/";
+
+            if (this.resizeWidthAndHeight != null)
+            {
+                url += this.resizeWidthAndHeight + "/";
+            }
+
+            return string.Format("{0}{1}", url, this.imageUrl);
         }
+
+
     }
 }
