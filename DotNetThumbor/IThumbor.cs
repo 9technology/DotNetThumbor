@@ -16,6 +16,10 @@
 
         Thumbor Grayscale(bool grayscaleImage);
 
+        Thumbor Watermark(string imageUrl, int right, int down, int transparency);
+
+        Thumbor Watermark(Thumbor thumborImage, int right, int down, int transparency);
+
         string ToUrl();
     }
 }

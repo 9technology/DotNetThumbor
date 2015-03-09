@@ -21,6 +21,8 @@
 
         private bool grayscale;
 
+        private List<string> watermarks = new List<string>();
+
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
@@ -88,6 +90,22 @@
             return this;
         }
 
+        public Thumbor Watermark(string imageUrl, int right, int down, int transparency)
+        {
+            this.watermarks.Add(string.Format("watermark({0},{1},{2},{3})", imageUrl, right, down, transparency));
+            return this;
+        }
+
+        public Thumbor Watermark(Thumbor thumborImage, int right, int down, int transparency)
+        {
+            return this.Watermark(thumborImage.ToUrl(), right, down, transparency);
+        }
+
+        public override string ToString()
+        {
+            return this.ToUrl();
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -126,6 +144,11 @@
             if (this.grayscale)
             {
                 filters.Add("grayscale()");
+            }
+
+            if (this.watermarks.Count != 0)
+            {
+                filters.AddRange(this.watermarks);
             }
 
             if (filters.Count != 0)
