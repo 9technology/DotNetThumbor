@@ -233,5 +233,38 @@
                                     .ToUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:watermark(http://localhost/unsafe/http://localhost/watermark.png,0,0,50)/http://localhost/image.jpg");
         }
+
+        [Test]
+        [TestCase("blue")]
+        [TestCase("auto")]
+        [TestCase("FF0000")]
+        public void ThumborFilling(string fillColour)
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Fill(fillColour)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:fill({0})/http://localhost/image.jpg", fillColour));
+        }
+
+        [Test]
+        public void ThumborTrim()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Trim(true)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/trim/http://localhost/image.jpg"));
+        }
+
+        [Test]
+        public void ThumborNotTrim()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Trim(false)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
+        }
     }
 }

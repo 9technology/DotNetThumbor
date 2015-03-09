@@ -20,6 +20,10 @@
 
         Thumbor Watermark(Thumbor thumborImage, int right, int down, int transparency);
 
+        Thumbor Fill(string fillColour);
+
+        Thumbor Trim(bool trimImage);
+
         string ToUrl();
     }
 }
