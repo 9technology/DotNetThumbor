@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Test.DotNetThumbor")]
+[assembly: AssemblyTitle("DotNetThumborTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ninemsn")]
-[assembly: AssemblyProduct("Test.DotNetThumbor")]
+[assembly: AssemblyProduct("DotNetThumborTest")]
 [assembly: AssemblyCopyright("Copyright © ninemsn 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ecab381c-2918-40c6-831c-7f25d5c91135")]
+[assembly: Guid("227050b8-33dc-42ef-806a-50f08d3d2882")]
 
 // Version information for an assembly consists of the following four values:
 //
