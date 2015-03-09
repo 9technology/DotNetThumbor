@@ -2,7 +2,7 @@
 {
     public interface IThumbor
     {
-        void BuildImage(string imageUrl);
+        Thumbor BuildImage(string imageUrl);
 
         string ToUrl();
     }

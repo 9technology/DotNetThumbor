@@ -6,19 +6,27 @@
     {
         private readonly Uri thumborServerUrl;
 
+        private Uri imageUrl;
+
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
         }
 
-        public void BuildImage(string imageUrl)
+        public Thumbor BuildImage(string imageUrl)
         {
-            throw new System.NotImplementedException();
+            this.imageUrl = new Uri(imageUrl);
+            return this;
         }
 
         public string ToUrl()
         {
-            throw new System.NotImplementedException();
+            if (this.imageUrl == null)
+            {
+                throw new InvalidOperationException("BuildImage must be called before ToUrl");
+            }
+
+            return string.Format("{0}unsafe/{1}", this.thumborServerUrl, this.imageUrl);
         }
     }
 }
