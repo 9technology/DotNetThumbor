@@ -4,9 +4,9 @@
 
     using DotNetThumbor;
 
-    using NUnit.Framework;
-
     using FluentAssertions;
+
+    using NUnit.Framework;
 
     [TestFixture]
     public class TestThumbor
@@ -97,6 +97,26 @@
                                     .Resize(20, 30)
                                     .ToUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/20x30/http://localhost/image.jpg");
+        }
+
+        [Test]
+        public void ThumborSmart()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Smart(true)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/smart/http://localhost/image.jpg");
+        }
+
+        [Test]
+        public void ThumborNotSmart()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Smart(false)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/http://localhost/image.jpg");
         }
     }
 }

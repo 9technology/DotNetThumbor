@@ -6,6 +6,8 @@
 
         Thumbor Resize(int? width, int? height);
 
+        Thumbor Smart(bool beSmart);
+
         string ToUrl();
     }
 }

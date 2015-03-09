@@ -10,6 +10,8 @@
 
         private string resizeWidthAndHeight;
 
+        private bool beSmart;
+
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
@@ -38,6 +40,12 @@
             return this;
         }
 
+        public Thumbor Smart(bool beSmart)
+        {
+            this.beSmart = beSmart;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -50,6 +58,11 @@
             if (this.resizeWidthAndHeight != null)
             {
                 url += this.resizeWidthAndHeight + "/";
+            }
+
+            if (this.beSmart)
+            {
+                url += "smart/";
             }
 
             return string.Format("{0}{1}", url, this.imageUrl);
