@@ -17,6 +17,8 @@
 
         private ImageHorizontalAlign horizontalAlign;
 
+        private ImageVerticalAlign verticalAlign;
+
         private string cropCoordinates;
 
         private int? quality;
@@ -30,6 +32,14 @@
         private bool trim;
 
         private string fitin;
+
+        private bool flipImageHorizonal;
+
+        private bool flipImageVertical;
+
+        private int? width;
+
+        private int? height;
 
         public Thumbor(string thumborServerUrl)
         {
@@ -116,10 +126,9 @@
 
         public Thumbor Resize(int? width, int? height)
         {
-            width = width ?? 0;
-            height = height ?? 0;
+            this.width = width ?? 0;
+            this.height = height ?? 0;
 
-            this.resizeWidthAndHeight = width + "x" + height;
             return this;
         }
 
@@ -196,6 +205,19 @@
 
         public Thumbor VerticalAlign(ImageVerticalAlign align)
         {
+            this.verticalAlign = align;
+            return this;
+        }
+
+        public Thumbor HorizontalFlip(bool flipImageHorizontal)
+        {
+            this.flipImageHorizonal = flipImageHorizontal;
+            return this;
+        }
+
+        public Thumbor VerticalFlip(bool flipImageVertical)
+        {
+            this.flipImageVertical = flipImageVertical;
             return this;
         }
 
@@ -228,14 +250,45 @@
                 url += this.fitin + "/";
             }
 
-            if (!string.IsNullOrEmpty(this.resizeWidthAndHeight))
+            if (this.width != null || this.height != null)
             {
-                url += this.resizeWidthAndHeight + "/";
+                if (this.width == 0 && this.flipImageHorizonal)
+                {
+                    url += string.Format("-0x");
+                }
+                else if (this.flipImageHorizonal)
+                {
+                    this.width = this.width * -1;
+                    url += string.Format("{0}x", this.width);
+                }
+                else
+                {
+                    url += string.Format("{0}x", this.width);
+                }
+
+                if (this.height == 0 && this.flipImageVertical)
+                {
+                    url += string.Format("-0/");
+                }
+                else if (this.flipImageVertical)
+                {
+                    this.height = this.height * -1;
+                    url += string.Format("{0}/", this.height);
+                }
+                else
+                {
+                    url += string.Format("{0}/", this.height);
+                }
             }
 
             if (this.horizontalAlign != ImageHorizontalAlign.Center)
             {
                 url += this.horizontalAlign.ToString().ToLower() + "/";
+            }
+
+            if (this.verticalAlign != ImageVerticalAlign.Middle)
+            {
+                url += this.verticalAlign.ToString().ToLower() + "/";
             }
 
             if (this.smartImage)

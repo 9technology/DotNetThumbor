@@ -41,6 +41,10 @@
 
         Thumbor VerticalAlign(Thumbor.ImageVerticalAlign align);
 
+        Thumbor HorizontalFlip(bool flipImageHorizontal);
+
+        Thumbor VerticalFlip(bool flipImageVertical);
+
         string ToUrl();
     }
 }
