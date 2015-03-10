@@ -42,6 +42,7 @@
     <Compile Include="IThumbor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Thumbor.cs" />
+    <Compile Include="ThumborSigner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Exceptions\" />
