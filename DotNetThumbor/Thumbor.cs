@@ -211,12 +211,14 @@
 
         public Thumbor HorizontalFlip(bool flipImageHorizontal)
         {
+            this.width = this.width ?? 0;
             this.flipImageHorizonal = flipImageHorizontal;
             return this;
         }
 
         public Thumbor VerticalFlip(bool flipImageVertical)
         {
+            this.height = this.height ?? 0;
             this.flipImageVertical = flipImageVertical;
             return this;
         }

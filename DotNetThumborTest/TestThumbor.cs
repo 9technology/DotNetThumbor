@@ -122,6 +122,17 @@
         }
 
         [Test]
+        public void ThumborFlipWithNoResize()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .HorizontalFlip(true)
+                                    .VerticalFlip(true)
+                                    .ToUrl();
+            resizedUrl.Should().Be("http://localhost/unsafe/-0x-0/http://localhost/image.jpg");
+        }
+
+        [Test]
         public void ThumborResizeWidthNegativeWidthNegativeHeightFlip()
         {
             var thumbor = new Thumbor("http://localhost/");
@@ -538,10 +549,10 @@
         {
             var watermark = new Thumbor("http://localhost/");
             watermark.BuildImage(
-                "http://localhost/watermark.png").Resize(-0, -0);
+                "https://localhost/watermark.png").HorizontalFlip(true).VerticalFlip(true);
 
             var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+            var resizedUrl = thumbor.BuildImage("https://localhost/image.jpg")
                                     .Trim(true)
                                     .Resize(200, 400)
                                     .Grayscale(true)
@@ -554,7 +565,7 @@
                                     .VerticalAlign(Thumbor.ImageVerticalAlign.Bottom)
                                     .Format(Thumbor.ImageFormat.Webp)
                                     .ToUrl();
-            resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:format(webp):quality(100):grayscale():watermark(http://localhost/unsafe/0x0/http://localhost/watermark.png,0,10,50):fill(blue)/http://localhost/image.jpg");
+            resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:format(webp):quality(100):grayscale():watermark(http://localhost/unsafe/-0x-0/https://localhost/watermark.png,0,10,50):fill(blue)/https://localhost/image.jpg");
         }
     }
 }
