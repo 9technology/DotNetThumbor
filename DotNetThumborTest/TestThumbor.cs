@@ -23,14 +23,6 @@
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ToUrlThrowExceptionIfBuildImageNotCalled()
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            thumbor.ToUrl();
-        }
-
-        [Test]
         [ExpectedException(typeof(ArgumentException))]
         [TestCase("")]
         [TestCase("notaurl")]
@@ -362,11 +354,12 @@
         [Test]
         public void ThumborWatermarkUsingThumbor()
         {
-            var watermark = new Thumbor("http://localhost/");
-
             var thumbor = new Thumbor("http://localhost/");
+
+            var watermark = thumbor.BuildImage("http://localhost/watermark.png").ToUrl();
+            
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Watermark(watermark.BuildImage("http://localhost/watermark.png"), 0, 0, 50)
+                                    .Watermark(watermark, 0, 0, 50)
                                     .ToUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:watermark(http://localhost/unsafe/http://localhost/watermark.png,0,0,50)/http://localhost/image.jpg");
         }
@@ -547,11 +540,13 @@
         [Test]
         public void ThumborMultiTest()
         {
-            var watermark = new Thumbor("http://localhost/");
-            watermark.BuildImage(
-                "https://localhost/watermark.png").HorizontalFlip(true).VerticalFlip(true);
-
             var thumbor = new Thumbor("http://localhost/");
+            
+            var watermark = thumbor.BuildImage("https://localhost/watermark.png")
+                                   .HorizontalFlip(true)
+                                   .VerticalFlip(true)
+                                   .ToUrl();
+
             var resizedUrl = thumbor.BuildImage("https://localhost/image.jpg")
                                     .Trim(true)
                                     .Resize(200, 400)
@@ -566,6 +561,15 @@
                                     .Format(Thumbor.ImageFormat.Webp)
                                     .ToUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:format(webp):quality(100):grayscale():watermark(http://localhost/unsafe/-0x-0/https://localhost/watermark.png,0,10,50):fill(blue)/https://localhost/image.jpg");
+        }
+
+        [Test]
+        public void ThumborSignedUrl()
+        {
+            var thumbor = new Thumbor("http://localhost/", "sample_key");
+            var resizedUrl = thumbor.BuildImage("https://localhost/image.jpg").ToUrl();
+
+            resizedUrl.Should().Be("http://localhost/_fak0PqFdoaKkMQpbxPE0ql8dtY=/https://localhost/image.jpg");
         }
     }
 }

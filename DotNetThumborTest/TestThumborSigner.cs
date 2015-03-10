@@ -1,7 +1,5 @@
 ﻿namespace DotNetThumborTest
 {
-    using System.Text;
-
     using DotNetThumbor;
 
     using FluentAssertions;
@@ -15,8 +13,7 @@
         [Test]
         public void TestEncodeSigner()
         {
-            var key = Encoding.UTF8.GetBytes("sample_key");
-            var result = ThumborSigner.Encode("http://input.jpg", key);
+            var result = ThumborSigner.Encode("http://input.jpg", "sample_key");
 
             result.Should().Be("2V__oFvPsslOdCY84FC7Sf6WeXI=");
         }
@@ -24,8 +21,7 @@
         [Test]
         public void TestEncodeSignerWithSlashReplacement()
         {
-            var key = Encoding.UTF8.GetBytes("ze_key");
-            var result = ThumborSigner.Encode("http://input.jpg", key); // should produce / in hash
+            var result = ThumborSigner.Encode("http://input.jpg", "ze_key"); // should produce / in hash
 
             result.Should().Be("3GUda_RJ29Oev5a4JMOysmQZmQA=");
         }
