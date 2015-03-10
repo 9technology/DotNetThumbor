@@ -1,7 +1,5 @@
 ﻿namespace DotNetThumborTest
 {
-    using System;
-    using System.Collections.Generic;
     using System.Text;
 
     using DotNetThumbor;
@@ -13,23 +11,23 @@
     [TestFixture]
     public class TestThumborSigner
     {
+        // Verified against https://quickhash.com/ for hmac sha1 which is used by thumbor
+        [Test]
+        public void TestEncodeSigner()
+        {
+            var key = Encoding.UTF8.GetBytes("sample_key");
+            var result = ThumborSigner.Encode("http://input.jpg", key);
+
+            result.Should().Be("2V__oFvPsslOdCY84FC7Sf6WeXI=");
+        }
 
         [Test]
-        public void TestMethod1()
+        public void TestEncodeSignerWithSlashReplacement()
         {
-            var key = Encoding.UTF8.GetBytes("");
-            var t = new ThumborSigner();
+            var key = Encoding.UTF8.GetBytes("ze_key");
+            var result = ThumborSigner.Encode("http://input.jpg", key); // should produce / in hash
 
-            var list = new List<string>();
-
-            var input = "https://searchcode.com/static/searchcode_logo.png";
-
-            list.Add(input);
-            
-            var result = t.Encode(string.Join("/", list), key);
-
-            var url = string.Format("http://test/{0}/{1}", result, input);
-
+            result.Should().Be("3GUda_RJ29Oev5a4JMOysmQZmQA=");
         }
     }
 }

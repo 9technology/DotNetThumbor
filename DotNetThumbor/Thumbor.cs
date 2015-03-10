@@ -9,8 +9,6 @@
 
         private Uri imageUrl;
 
-        private string resizeWidthAndHeight;
-
         private bool smartImage;
 
         private ImageFormat outputFormat;

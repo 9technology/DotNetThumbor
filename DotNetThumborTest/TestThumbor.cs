@@ -1,6 +1,7 @@
 ﻿namespace DotNetThumborTest
 {
     using System;
+    using System.Globalization;
 
     using DotNetThumbor;
 
@@ -290,7 +291,7 @@
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Quality(quality)
                                     .ToUrl();
-            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:quality({0})/http://localhost/image.jpg", quality.ToString()));
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:quality({0})/http://localhost/image.jpg", quality.ToString(CultureInfo.InvariantCulture)));
         }
 
         [Test]
@@ -470,7 +471,6 @@
                                     .ToUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/http://localhost/image.jpg");
         }
-
 
         [Test]
         [TestCase(Thumbor.ImageHorizontalAlign.Left)]
