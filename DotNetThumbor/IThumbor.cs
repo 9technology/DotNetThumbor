@@ -2,6 +2,6 @@
 {
     public interface IThumbor
     {
-        ThumborImage BuildImage(string imageUrl);
+        IThumborImage BuildImage(string imageUrl);
     }
 }

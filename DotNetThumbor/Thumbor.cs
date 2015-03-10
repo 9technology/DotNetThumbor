@@ -8,11 +8,21 @@
 
         private readonly Uri thumborServerUrl;
 
+        /// <summary>
+        /// Creates a thumbor factory without signed image URL's
+        /// </summary>
+        /// <param name="thumborServerUrl">URL to the thumbor server EG http://mythumborserver.com/ </param>
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
         }
 
+        /// <summary>
+        /// Creates a thumbor factory which supports signed image URL's using the supplied key which should be the same
+        /// as the targetted thumbor server
+        /// </summary>
+        /// <param name="thumborServerUrl"></param>
+        /// <param name="thumborSecretKey"></param>
         public Thumbor(string thumborServerUrl, string thumborSecretKey)
         {
             this.thumborSecretKey = thumborSecretKey;
@@ -22,27 +32,27 @@
         public enum ImageFormat
         {
             /// <summary>
-            /// The none.
+            /// Default. When set will preseve the source format to be the same as the input.
             /// </summary>
             None,
 
             /// <summary>
-            /// The webp.
+            /// Change the output image format to be a WebP image.
             /// </summary>
             Webp,
 
             /// <summary>
-            /// The jpeg.
+            /// Change the output image format to be a JPEG image.
             /// </summary>
             Jpeg,
 
             /// <summary>
-            /// The png.
+            /// Change the output image format to be a PNG image.
             /// </summary>
             Png,
 
             /// <summary>
-            /// The gif.
+            /// Change the output image format to be a GIF image.
             /// </summary>
             Gif
         }
@@ -50,17 +60,17 @@
         public enum ImageHorizontalAlign
         {
             /// <summary>
-            /// The center.
+            /// Default. Sets the crop / resize point to be the center of the image.
             /// </summary>
             Center,
 
             /// <summary>
-            /// The left.
+            /// Sets the crop / resize point to be the left of the image.
             /// </summary>
             Left,
 
             /// <summary>
-            /// The right.
+            /// Sets the crop / resize point to be the right of the image.
             /// </summary>
             Right
         }
@@ -68,22 +78,28 @@
         public enum ImageVerticalAlign
         {
             /// <summary>
-            /// The middle.
+            /// Default. Sets the crop / resize point to be the middle of the image.
             /// </summary>
             Middle,
 
             /// <summary>
-            /// The top.
+            /// Sets the crop / resize point to be the top of the image.
             /// </summary>
             Top,
 
             /// <summary>
-            /// The bottom.
+            /// Sets the crop / resize point to be the bottom of the image.
             /// </summary>
             Bottom
         }
 
-        public ThumborImage BuildImage(string imageUrl)
+        /// <summary>
+        /// Builds the thumbor image url based on the URL supplied and returns an thumbor image
+        /// to which thumbor operations can be applied to.
+        /// </summary>
+        /// <param name="imageUrl">URL to an image which thumbor need to be applied to</param>
+        /// <returns>Implementation of a thumbor image which thumber operations can be applied to</returns>
+        public IThumborImage BuildImage(string imageUrl)
         {
             return new ThumborImage(this.thumborServerUrl, this.thumborSecretKey, imageUrl);
         }       
