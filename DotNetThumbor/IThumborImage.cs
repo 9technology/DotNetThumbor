@@ -50,5 +50,7 @@
         IThumborImage Contrast(int contrast);
 
         IThumborImage Colorize(int redPercentage, int greenPercentage, int bluePercentage, string fillColor);
+
+        IThumborImage Equalize(bool equalizeImage);
     }
 }

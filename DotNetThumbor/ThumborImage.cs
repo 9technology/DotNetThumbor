@@ -47,6 +47,9 @@
 
         private string colorize;
 
+        private bool equalize
+            ;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -185,6 +188,12 @@
             return this;
         }
 
+        public IThumborImage Equalize(bool equalizeImage)
+        {
+            this.equalize = equalizeImage;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -311,6 +320,11 @@
             if (!string.IsNullOrEmpty(this.colorize))
             {
                 filters.Add(this.colorize);
+            }
+
+            if (this.equalize)
+            {
+                filters.Add("equalize()");
             }
 
             if (filters.Count != 0)
