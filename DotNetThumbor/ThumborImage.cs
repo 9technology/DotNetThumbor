@@ -9,6 +9,8 @@
     {
         private readonly List<string> watermarks = new List<string>();
 
+        private readonly Dictionary<string, string> filters = new Dictionary<string, string>(); 
+
         private readonly ThumborSigner thumborSigner;
 
         private readonly string thumborSecretKey;
@@ -19,19 +21,11 @@
 
         private bool smartImage;
 
-        private string outputFormat;
-
         private Thumbor.ImageHorizontalAlign horizontalAlign;
 
         private Thumbor.ImageVerticalAlign verticalAlign;
 
         private string cropCoordinates;
-
-        private int? quality;
-
-        private bool grayscale;
-
-        private string fillColour;
 
         private bool trim;
 
@@ -44,42 +38,6 @@
         private int? width;
 
         private int? height;
-
-        private int? brightness;
-
-        private int? contrast;
-
-        private string colorize;
-
-        private bool equalize;
-
-        private int? maxBytes;
-
-        private int? noise;
-
-        private bool noUpscale;
-
-        private string rgb;
-
-        private string roundCorners;
-
-        private int? rotate;
-
-        private double? saturation;
-
-        private string sharpen;
-
-        private bool stripIcc;
-
-        private string convolution;
-
-        private string blur;
-
-        private bool extractFocal;
-
-        private string gifVOption;
-
-        private string curve;
 
         public ThumborImage(ThumborSigner thumborSigner, Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
@@ -115,7 +73,7 @@
         {
             if (imageFormat != Thumbor.ImageFormat.None)
             {
-                this.outputFormat = string.Format("format({0})", imageFormat.ToString().ToLower());
+                this.filters.Add("format", string.Format("{0}", imageFormat.ToString().ToLower()));
             }
 
             return this;
@@ -129,13 +87,13 @@
 
         public IThumborImage Quality(int? imageQuality)
         {
-            this.quality = imageQuality;
+            this.filters.Add("quality", string.Format("{0}", imageQuality));
             return this;
         }
 
         public IThumborImage Grayscale(bool grayscaleImage)
         {
-            this.grayscale = grayscaleImage;
+            this.filters.Add("grayscale", string.Empty);
             return this;
         }
 
@@ -147,7 +105,7 @@
 
         public IThumborImage Fill(string fillInColour)
         {
-            this.fillColour = fillInColour;
+            this.filters.Add("fill", string.Format("{0}", fillInColour));
             return this;
         }
 
@@ -206,124 +164,138 @@
             return server + this.FormatUrlParts();
         }
 
-        public IThumborImage Brightness(int imageBrightness)
+        public IThumborImage Brightness(int? imageBrightness)
         {
-            this.brightness = imageBrightness;
+            if (imageBrightness == null)
+            {
+                this.filters.Remove("brightness");
+                return this;
+            }
+
+            this.ReplaceOrAddFilter("brightness", imageBrightness.ToString());
             return this;
         }
 
-        public IThumborImage Contrast(int imageContrast)
+        public IThumborImage Contrast(int? imageContrast)
         {
-            this.contrast = imageContrast;
+            if (imageContrast == null)
+            {
+                this.filters.Remove("contrast");
+                return this;
+            }
+
+            this.ReplaceOrAddFilter("contrast", imageContrast.ToString());
             return this;
         }
 
         public IThumborImage Colorize(int redPercentage, int greenPercentage, int bluePercentage, string fillColor)
         {
-            this.colorize = string.Format("colorize({0},{1},{2},{3})", redPercentage, greenPercentage, bluePercentage, fillColor);
+            this.filters.Add("colorize", string.Format("{0},{1},{2},{3}", redPercentage, greenPercentage, bluePercentage, fillColor));
             return this;
         }
 
         public IThumborImage Equalize(bool equalizeImage)
         {
-            this.equalize = equalizeImage;
+            this.filters.Add("equalize", string.Empty);
             return this;
         }
 
         public IThumborImage MaxBytes(int? imageMaxBytes)
         {
-            this.maxBytes = imageMaxBytes;
+            this.filters.Add("max_bytes", string.Format("{0}", imageMaxBytes));
             return this;
         }
 
         public IThumborImage Noise(int? imageNoise)
         {
-            this.noise = imageNoise;
+            this.filters.Add("noise", string.Format("{0}", imageNoise));
             return this;
         }
 
         public IThumborImage NoUpscale(bool noUpscaleImage)
         {
-            this.noUpscale = noUpscaleImage;
+            this.filters.Add("no_upscale", string.Empty);
             return this;
         }
 
         public IThumborImage Rgb(int red, int green, int blue)
         {
-            this.rgb = string.Format("rgb({0},{1},{2})", red, green, blue);
+            this.filters.Add("rgb", string.Format("{0},{1},{2}", red, green, blue));
             return this;
         }
 
         public IThumborImage RoundCorners(int radiusA, int? radiusB, int red, int green, int blue)
         {
-            this.roundCorners = string.Format(
-                "round_corners({0},{1},{2},{3})",
+            this.filters.Add("round_corners", string.Format(
+                "{0},{1},{2},{3}",
                 radiusB == null ? radiusA.ToString(CultureInfo.InvariantCulture) : string.Format("{0}|{1}", radiusA, radiusB),
                 red,
                 green,
-                blue);
+                blue));
             return this;
         }
 
         public IThumborImage Rotate(int? imageRotateAngle)
         {
-            this.rotate = imageRotateAngle;
+            this.filters.Add("rotate", string.Format("{0}", imageRotateAngle));
             return this;
         }
 
         public IThumborImage Saturation(double? imageSaturation)
         {
-            this.saturation = imageSaturation;
+            this.filters.Add("saturation", string.Format("{0}", imageSaturation));
             return this;
         }
 
         public IThumborImage Sharpen(double sharpenAmount, double sharpenRadius, bool luminance)
         {
-            this.sharpen = string.Format(
-                "sharpen({0},{1},{2})", sharpenAmount, sharpenRadius, luminance.ToString().ToLower());
+            this.filters.Add("sharpen", string.Format(
+                "{0},{1},{2}", sharpenAmount, sharpenRadius, luminance.ToString().ToLower()));
             return this;
         }
 
         public IThumborImage StripIcc(bool stripIccFromImage)
         {
-            this.stripIcc = stripIccFromImage;
+            this.filters.Add("strip_icc", string.Empty);
             return this;
         }
 
         public IThumborImage Convolution(IList<int> matrix, int columns, bool shouldNormalise)
         {
-            this.convolution = string.Format("convolution({0},{1},{2})", string.Join(";", matrix), columns, shouldNormalise.ToString().ToLower());
+            this.filters.Add("convolution", string.Format("{0},{1},{2}", string.Join(";", matrix), columns, shouldNormalise.ToString().ToLower()));
             return this;
         }
 
         public IThumborImage Blur(int blurRadius, int? blurSigma)
         {
-            this.blur = blurSigma == null ? blurRadius.ToString(CultureInfo.InvariantCulture) : blurRadius + "," + blurSigma;
+            this.filters.Add("blur", string.Format("{0}", blurSigma == null ? blurRadius.ToString(CultureInfo.InvariantCulture) : blurRadius + "," + blurSigma));
             return this;
         }
 
         public IThumborImage ExtractFocal()
         {
-            this.extractFocal = true;
+            this.filters.Add("extract_focal", string.Empty);
             return this;
         }
 
         public IThumborImage GifV(Thumbor.ImageGifVOption imageGifVOption)
         {
-            this.gifVOption = string.Format(
-                "gifv({0})",
-                imageGifVOption == Thumbor.ImageGifVOption.None ? string.Empty : imageGifVOption.ToString().ToLower());
+            this.filters.Add("gifv", string.Format(
+                "{0}",
+                imageGifVOption == Thumbor.ImageGifVOption.None ? string.Empty : imageGifVOption.ToString().ToLower()));
             return this;
         }
 
         public IThumborImage Curve(IList<Tuple<int, int>> curveAll, IList<Tuple<int, int>> curveRed, IList<Tuple<int, int>> curveGreen, IList<Tuple<int, int>> curveBlue)
         {
-            this.curve = string.Format(
-                "curve([{0}],[{1}],[{2}],[{3}])",
+            var curve = string.Format(
+                "[{0}],[{1}],[{2}],[{3}]",
                 string.Join(",",   curveAll.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))),
                 string.Join(",",   curveRed.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))), 
                 string.Join(",", curveGreen.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))), 
                 string.Join(",",  curveBlue.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))));
+
+            this.filters.Add("curve", curve);
             return this;
         }
 
@@ -414,11 +386,11 @@
                 urlParts.Add("smart");
             }
 
-            var filters = this.BuildFilters();
+            var methodFilters = this.filters.Select(x => string.Format("{0}({1})", x.Key, x.Value)).ToArray();
 
-            if (filters.Count != 0)
+            if (methodFilters.Count() != 0)
             {
-                urlParts.Add("filters:" + string.Join(":", filters));
+                urlParts.Add("filters:" + string.Join(":", methodFilters));
             }
 
             urlParts.Add(this.imageUrl.ToString());
@@ -426,125 +398,14 @@
             return string.Join("/", urlParts);
         }
 
-        private List<string> BuildFilters()
+        private void ReplaceOrAddFilter(string filterName, string filterOptions)
         {
-            var filters = new List<string>();
-            if (!string.IsNullOrEmpty(this.outputFormat))
+            if (this.filters.ContainsKey(filterName))
             {
-                filters.Add(this.outputFormat);
+                this.filters.Remove(filterName);
             }
 
-            if (this.quality != null)
-            {
-                filters.Add(string.Format("quality({0})", this.quality));
-            }
-
-            if (this.grayscale)
-            {
-                filters.Add("grayscale()");
-            }
-
-            if (this.watermarks.Count != 0)
-            {
-                filters.AddRange(this.watermarks);
-            }
-
-            if (!string.IsNullOrEmpty(this.fillColour))
-            {
-                filters.Add(string.Format("fill({0})", this.fillColour));
-            }
-
-            if (this.brightness != null)
-            {
-                filters.Add(string.Format("brightness({0})", this.brightness));
-            }
-
-            if (this.contrast != null)
-            {
-                filters.Add(string.Format("contrast({0})", this.contrast));
-            }
-
-            if (!string.IsNullOrEmpty(this.colorize))
-            {
-                filters.Add(this.colorize);
-            }
-
-            if (this.equalize)
-            {
-                filters.Add("equalize()");
-            }
-
-            if (this.maxBytes != null)
-            {
-                filters.Add(string.Format("max_bytes({0})", this.maxBytes));
-            }
-
-            if (this.noise != null)
-            {
-                filters.Add(string.Format("noise({0})", this.noise));
-            }
-
-            if (this.noUpscale)
-            {
-                filters.Add("no_upscale()");
-            }
-
-            if (!string.IsNullOrEmpty(this.rgb))
-            {
-                filters.Add(this.rgb);
-            }
-
-            if (!string.IsNullOrEmpty(this.roundCorners))
-            {
-                filters.Add(this.roundCorners);
-            }
-
-            if (this.rotate != null)
-            {
-                filters.Add(string.Format("rotate({0})", this.rotate));
-            }
-
-            if (this.saturation != null)
-            {
-                filters.Add(string.Format("saturation({0})", this.saturation));
-            }
-
-            if (!string.IsNullOrEmpty(this.sharpen))
-            {
-                filters.Add(this.sharpen);
-            }
-
-            if (this.stripIcc)
-            {
-                filters.Add("strip_icc()");
-            }
-
-            if (!string.IsNullOrEmpty(this.convolution))
-            {
-                filters.Add(this.convolution);
-            }
-
-            if (!string.IsNullOrEmpty(this.blur))
-            {
-                filters.Add(string.Format("blur({0})", this.blur));
-            }
-
-            if (this.extractFocal)
-            {
-                filters.Add("extract_focal()");
-            }
-
-            if (!string.IsNullOrEmpty(this.gifVOption))
-            {
-                filters.Add(this.gifVOption);
-            }
-
-            if (!string.IsNullOrEmpty(this.curve))
-            {
-                filters.Add(this.curve);
-            }
-
-            return filters;
+            this.filters.Add(filterName, filterOptions);
         }
     }
 }
