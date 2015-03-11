@@ -19,7 +19,7 @@
 
         private bool smartImage;
 
-        private Thumbor.ImageFormat outputFormat;
+        private string outputFormat;
 
         private Thumbor.ImageHorizontalAlign horizontalAlign;
 
@@ -113,7 +113,11 @@
 
         public IThumborImage Format(Thumbor.ImageFormat imageFormat)
         {
-            this.outputFormat = imageFormat;
+            if (imageFormat != Thumbor.ImageFormat.None)
+            {
+                this.outputFormat = string.Format("format({0})", imageFormat.ToString().ToLower());
+            }
+
             return this;
         }
 
@@ -425,9 +429,9 @@
         private List<string> BuildFilters()
         {
             var filters = new List<string>();
-            if (this.outputFormat != Thumbor.ImageFormat.None)
+            if (!string.IsNullOrEmpty(this.outputFormat))
             {
-                filters.Add(string.Format("format({0})", this.outputFormat.ToString().ToLower()));
+                filters.Add(this.outputFormat);
             }
 
             if (this.quality != null)
