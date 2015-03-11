@@ -55,6 +55,8 @@
 
         private bool noUpscale;
 
+        private string rgb;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -217,6 +219,12 @@
             return this;
         }
 
+        public IThumborImage Rgb(int red, int green, int blue)
+        {
+            this.rgb = string.Format("rgb({0},{1},{2})", red, green, blue);
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -363,6 +371,11 @@
             if (this.noUpscale)
             {
                 filters.Add("no_upscale()");
+            }
+
+            if (!string.IsNullOrEmpty(this.rgb))
+            {
+                filters.Add(this.rgb);
             }
 
             if (filters.Count != 0)

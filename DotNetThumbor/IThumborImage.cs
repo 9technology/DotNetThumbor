@@ -58,5 +58,7 @@
         IThumborImage Noise(int? imageNoise);
 
         IThumborImage NoUpscale(bool noUpscaleImage);
+
+        IThumborImage Rgb(int red, int green, int blue);
     }
 }
