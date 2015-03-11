@@ -393,7 +393,7 @@
                                     .VerticalAlign(Thumbor.ImageVerticalAlign.Bottom)
                                     .Format(Thumbor.ImageFormat.Webp)
                                     .ToUrl();
-            resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:format(webp):quality(100):grayscale():watermark(http://localhost/unsafe/-0x-0/https://localhost/watermark.png,0,10,50):fill(blue)/https://localhost/image.jpg");
+            resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:grayscale():fill(blue):quality(100):format(webp):watermark(http://localhost/unsafe/-0x-0/https://localhost/watermark.png,0,10,50)/https://localhost/image.jpg");
         }
 
         [Test]
@@ -420,7 +420,7 @@
             resizedUrlImage.Format(Thumbor.ImageFormat.Webp);
 
             var resizedUrl = resizedUrlImage.ToUrl();
-            resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:format(webp):quality(100):grayscale():watermark(http://localhost/unsafe/-0x-0/https://localhost/watermark.png,0,10,50):fill(blue)/https://localhost/image.jpg");
+            resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:grayscale():fill(blue):quality(100):format(webp):watermark(http://localhost/unsafe/-0x-0/https://localhost/watermark.png,0,10,50)/https://localhost/image.jpg");
         }
 
         [Test]

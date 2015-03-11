@@ -23,15 +23,5 @@
                                     .ToUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:saturation({0})/http://localhost/image.jpg", imageSaturation));
         }
-
-        [Test]
-        public void ThumborSaturationFilterClear()
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Saturation(null)
-                                    .ToUrl();
-            resizedUrl.Should().Be("http://localhost/unsafe/http://localhost/image.jpg");
-        }
     }
 }

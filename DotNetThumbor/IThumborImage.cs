@@ -22,7 +22,7 @@
 
         IThumborImage Crop(int topLeft, int topRight, int bottomLeft, int bottomRight);
 
-        IThumborImage Quality(int? imageQuality);
+        IThumborImage Quality(int imageQuality);
 
         IThumborImage Grayscale(bool grayscaleImage);
 
@@ -48,17 +48,17 @@
 
         string ToUnsafeUrl();
 
-        IThumborImage Brightness(int? brightness);
+        IThumborImage Brightness(int brightness);
 
-        IThumborImage Contrast(int? contrast);
+        IThumborImage Contrast(int contrast);
 
         IThumborImage Colorize(int redPercentage, int greenPercentage, int bluePercentage, string fillColor);
 
         IThumborImage Equalize(bool equalizeImage);
 
-        IThumborImage MaxBytes(int? imageMaxBytes);
+        IThumborImage MaxBytes(int imageMaxBytes);
 
-        IThumborImage Noise(int? imageNoise);
+        IThumborImage Noise(int imageNoise);
 
         IThumborImage NoUpscale(bool noUpscaleImage);
 
@@ -66,9 +66,9 @@
 
         IThumborImage RoundCorners(int radiusA, int? radiusB, int red, int green, int blue);
 
-        IThumborImage Rotate(int? imageRotateAngle);
+        IThumborImage Rotate(int imageRotateAngle);
 
-        IThumborImage Saturation(double? imageSaturation);
+        IThumborImage Saturation(double imageSaturation);
 
         IThumborImage Sharpen(double sharpenAmount, double sharpenRadius, bool luminance);
 
