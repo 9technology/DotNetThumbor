@@ -72,6 +72,8 @@
 
         private string blur;
 
+        private bool extractFocal;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -284,7 +286,13 @@
 
         public IThumborImage Blur(int blurRadius, int? blurSigma)
         {
-            this.blur = blurSigma == null ? blurRadius.ToString() : blurRadius + "," + blurSigma;
+            this.blur = blurSigma == null ? blurRadius.ToString(CultureInfo.InvariantCulture) : blurRadius + "," + blurSigma;
+            return this;
+        }
+
+        public IThumborImage ExtractFocal()
+        {
+            this.extractFocal = true;
             return this;
         }
 
@@ -474,6 +482,11 @@
             if (!string.IsNullOrEmpty(this.blur))
             {
                 filters.Add(string.Format("blur({0})", this.blur));
+            }
+
+            if (this.extractFocal)
+            {
+                filters.Add("extract_focal()");
             }
 
             if (filters.Count != 0)

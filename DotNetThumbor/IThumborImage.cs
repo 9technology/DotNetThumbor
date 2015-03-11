@@ -76,5 +76,7 @@
         IThumborImage Convolution(IList<int> matrix, int columns, bool shouldNormalise);
 
         IThumborImage Blur(int blurRadius, int? blurSigma);
+
+        IThumborImage ExtractFocal();
     }
 }
