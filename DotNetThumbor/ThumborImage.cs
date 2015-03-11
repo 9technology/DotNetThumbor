@@ -27,7 +27,7 @@
 
         private string cropCoordinates;
 
-        private bool trim;
+        private Thumbor.ImageTrimOption trim;
 
         private string fitin;
 
@@ -115,9 +115,9 @@
             return this;
         }
 
-        public IThumborImage Trim(bool trimImage)
+        public IThumborImage Trim(Thumbor.ImageTrimOption imageTrimOption)
         {
-            this.trim = trimImage;
+            this.trim = imageTrimOption;
             return this;
         }
 
@@ -333,11 +333,11 @@
         {
             var urlParts = new List<string>();
 
-            if (this.trim)
+            if (this.trim != Thumbor.ImageTrimOption.None)
             {
-                urlParts.Add("trim");
+                urlParts.Add(this.trim == Thumbor.ImageTrimOption.BottomRight ? "trim:bottom-right" : "trim");
             }
-
+            
             if (!string.IsNullOrEmpty(this.cropCoordinates))
             {
                 urlParts.Add(this.cropCoordinates);

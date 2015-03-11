@@ -226,19 +226,29 @@
         {
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Trim(true)
+                                    .Trim(Thumbor.ImageTrimOption.None)
+                                    .ToUrl();
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
+        }
+
+        [Test]
+        public void ThumborTrimTopLeft()
+        {
+            var thumbor = new Thumbor("http://localhost/");
+            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
+                                    .Trim(Thumbor.ImageTrimOption.TopLeft)
                                     .ToUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/trim/http://localhost/image.jpg"));
         }
 
         [Test]
-        public void ThumborNotTrim()
+        public void ThumborTrimBottomRight()
         {
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Trim(false)
+                                    .Trim(Thumbor.ImageTrimOption.BottomRight)
                                     .ToUrl();
-            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
+            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/trim:bottom-right/http://localhost/image.jpg"));
         }
 
         [Test]
@@ -246,8 +256,8 @@
         {
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Trim(true)
-                                    .Trim(false)
+                                    .Trim(Thumbor.ImageTrimOption.BottomRight)
+                                    .Trim(Thumbor.ImageTrimOption.None)
                                     .ToUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
         }
@@ -381,7 +391,7 @@
                                    .ToUrl();
 
             var resizedUrl = thumbor.BuildImage("https://localhost/image.jpg")
-                                    .Trim(true)
+                                    .Trim(Thumbor.ImageTrimOption.TopLeft)
                                     .Resize(200, 400)
                                     .Grayscale(true)
                                     .Fill("blue")
@@ -407,7 +417,7 @@
             var watermark = watermarkImage.ToUrl();
 
             var resizedUrlImage = thumbor.BuildImage("https://localhost/image.jpg");
-            resizedUrlImage.Trim(true);
+            resizedUrlImage.Trim(Thumbor.ImageTrimOption.TopLeft);
             resizedUrlImage.Resize(200, 400);
             resizedUrlImage.Grayscale(true);
             resizedUrlImage.Fill("blue");

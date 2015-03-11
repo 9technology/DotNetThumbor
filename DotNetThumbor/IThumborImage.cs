@@ -30,7 +30,7 @@
 
         IThumborImage Fill(string fillInColour);
 
-        IThumborImage Trim(bool trimImage);
+        IThumborImage Trim(Thumbor.ImageTrimOption imageTrimOption);
 
         IThumborImage FitIn(bool fitIn);
 

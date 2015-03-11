@@ -118,6 +118,24 @@
             Webm
         }
 
+        public enum ImageTrimOption
+        {
+            /// <summary>
+            /// Default. No trim option.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Sets trim to use the top-left pixel colour.
+            /// </summary>
+            TopLeft,
+
+            /// <summary>
+            /// Sets trim to use the bottom-right pixel colour.
+            /// </summary>
+            BottomRight
+        }
+
         /// <summary>
         /// Builds the thumbor image url based on the URL supplied and returns an thumbor image
         /// to which thumbor operations can be applied to.
