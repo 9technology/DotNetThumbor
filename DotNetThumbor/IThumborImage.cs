@@ -44,5 +44,7 @@
         string ToUrl();
 
         string ToUnsafeUrl();
+
+        IThumborImage Brightness(int brightness);
     }
 }

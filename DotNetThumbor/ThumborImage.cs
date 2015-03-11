@@ -41,6 +41,8 @@
 
         private int? height;
 
+        private int? brightness;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -161,6 +163,12 @@
             return server + this.FormatUrlParts();
         }
 
+        public IThumborImage Brightness(int imageBrightness)
+        {
+            this.brightness = imageBrightness;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -272,6 +280,11 @@
             if (!string.IsNullOrEmpty(this.fillColour))
             {
                 filters.Add(string.Format("fill({0})", this.fillColour));
+            }
+
+            if (this.brightness != null)
+            {
+                filters.Add(string.Format("brightness({0})", this.brightness));
             }
 
             if (filters.Count != 0)
