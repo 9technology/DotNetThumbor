@@ -71,6 +71,7 @@
     <Compile Include="TestThumborFilters\TestNoUpscale.cs" />
     <Compile Include="TestThumborFilters\TestQuality.cs" />
     <Compile Include="TestThumborFilters\TestRgb.cs" />
+    <Compile Include="TestThumborFilters\TestRoundCorners.cs" />
     <Compile Include="TestThumborSigner.cs" />
     <Compile Include="TestThumborImage.cs" />
   </ItemGroup>

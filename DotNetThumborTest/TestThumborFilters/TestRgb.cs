@@ -1,7 +1,5 @@
 ﻿namespace DotNetThumborTest.TestThumborFilters
 {
-    using System.Globalization;
-
     using DotNetThumbor;
 
     using FluentAssertions;

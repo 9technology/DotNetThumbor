@@ -57,6 +57,8 @@
 
         private string rgb;
 
+        private string roundCorners;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -225,6 +227,17 @@
             return this;
         }
 
+        public IThumborImage RoundCorners(int radiusA, int? radiusB, int red, int green, int blue)
+        {
+            this.roundCorners = string.Format(
+                "round_corners({0},{1},{2},{3})",
+                radiusB == null ? radiusA.ToString() : string.Format("{0}|{1}", radiusA, radiusB),
+                red,
+                green,
+                blue);
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -376,6 +389,11 @@
             if (!string.IsNullOrEmpty(this.rgb))
             {
                 filters.Add(this.rgb);
+            }
+
+            if (!string.IsNullOrEmpty(this.roundCorners))
+            {
+                filters.Add(this.roundCorners);
             }
 
             if (filters.Count != 0)
