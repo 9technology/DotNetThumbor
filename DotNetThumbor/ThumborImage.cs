@@ -64,12 +64,11 @@
         }
 
         /// <summary>
-        /// Resize the image. See https://github.com/thumbor/thumbor/wiki/Usage#image-size for details
-        /// Detailed information about the resizing algorithms https://github.com/thumbor/thumbor/wiki/Crop-and-resize-algorithms
+        /// Resize the image. See https://github.com/thumbor/thumbor/wiki/Usage#image-size for details.
         /// </summary>
         /// <param name="newWidth">Width to resize the image to. Nulls will be treated as 0. Negative numbers will flip the image.</param>
         /// <param name="newHeight">Height to resize the image to. Nulls will be treated as 0. Negative numbers will flip the image.</param>
-        /// <returns></returns>
+        /// <returns>The current thumbor image object.</returns>
         public IThumborImage Resize(int? newWidth, int? newHeight)
         {
             this.width = newWidth ?? 0;
@@ -78,12 +77,22 @@
             return this;
         }
 
+        /// <summary>
+        /// Enables or disables smart cropping on the image. See https://github.com/thumbor/thumbor/wiki/Usage#smart-cropping for details.
+        /// </summary>
+        /// <param name="doSmartImage">True to enable smart cropping and false to remove it.</param>
+        /// <returns>The current thumbor image object.</returns>
         public IThumborImage Smart(bool doSmartImage)
         {
             this.smartImage = doSmartImage;
             return this;
         }
 
+        /// <summary>
+        /// Sets the output format of the image.
+        /// </summary>
+        /// <param name="imageFormat">Image format that should be specified.</param>
+        /// <returns>The current thumbor image object.</returns>
         public IThumborImage Format(Thumbor.ImageFormat imageFormat)
         {
             if (imageFormat != Thumbor.ImageFormat.None)
