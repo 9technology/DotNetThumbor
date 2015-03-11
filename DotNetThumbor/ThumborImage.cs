@@ -39,6 +39,14 @@
 
         private int? height;
 
+        /// <summary>
+        /// Creates a new ThumborImage which uses the provided parameters to create either a
+        /// signed or unsigned URL with filters and other thumbor options
+        /// </summary>
+        /// <param name="thumborSigner">Implementation of IThumborSigner for signing keys</param>
+        /// <param name="thumborServerUrl">URL to the thumbor server EG http://mythumborserver.com/ </param>
+        /// <param name="thumborSecretKey">The secret key used by the thumbor server for signing URL's</param>
+        /// <param name="imageUrl">URL to the image that will be manipulated by Thumbor</param>
         public ThumborImage(ThumborSigner thumborSigner, Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -55,6 +63,13 @@
             this.thumborServerUrl = thumborServerUrl;
         }
 
+        /// <summary>
+        /// Resize the image. See https://github.com/thumbor/thumbor/wiki/Usage#image-size for details
+        /// Detailed information about the resizing algorithms https://github.com/thumbor/thumbor/wiki/Crop-and-resize-algorithms
+        /// </summary>
+        /// <param name="newWidth">Width to resize the image to. Nulls will be treated as 0. Negative numbers will flip the image.</param>
+        /// <param name="newHeight">Height to resize the image to. Nulls will be treated as 0. Negative numbers will flip the image.</param>
+        /// <returns></returns>
         public IThumborImage Resize(int? newWidth, int? newHeight)
         {
             this.width = newWidth ?? 0;

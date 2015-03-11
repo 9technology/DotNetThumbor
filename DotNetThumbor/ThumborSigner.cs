@@ -5,7 +5,7 @@
     using System.Security.Cryptography;
     using System.Text;
 
-    public class ThumborSigner
+    public class ThumborSigner : IThumborSigner
     {
         public string Encode(string input, string key)
         {
