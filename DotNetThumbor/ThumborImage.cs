@@ -65,6 +65,7 @@
 
         /// <summary>
         /// Resize the image. See https://github.com/thumbor/thumbor/wiki/Usage#image-size for details.
+        /// Can be called multiple times with the last call overriding all previous calls.
         /// </summary>
         /// <param name="newWidth">Width to resize the image to. Nulls will be treated as 0. Negative numbers will flip the image.</param>
         /// <param name="newHeight">Height to resize the image to. Nulls will be treated as 0. Negative numbers will flip the image.</param>
@@ -79,6 +80,7 @@
 
         /// <summary>
         /// Enables or disables smart cropping on the image. See https://github.com/thumbor/thumbor/wiki/Usage#smart-cropping for details.
+        /// Can be called multiple times with the last call overriding all previous calls.
         /// </summary>
         /// <param name="doSmartImage">True to enable smart cropping and false to remove it.</param>
         /// <returns>The current thumbor image object.</returns>
@@ -89,7 +91,8 @@
         }
 
         /// <summary>
-        /// Sets the output format of the image.
+        /// Sets the output format of the image. See https://github.com/thumbor/thumbor/wiki/Format for details.
+        /// Can be called multiple times with the last call overriding all previous calls.
         /// </summary>
         /// <param name="imageFormat">Image format that should be specified.</param>
         /// <returns>The current thumbor image object.</returns>
@@ -103,18 +106,39 @@
             return this;
         }
 
+        /// <summary>
+        /// Crop the image around the points specified. See https://github.com/thumbor/thumbor/wiki/Usage#manual-crop for details.
+        /// Can be called multiple times with the last call overriding all previous calls.
+        /// </summary>
+        /// <param name="topLeft">Top left pixel location to start the crop.</param>
+        /// <param name="topRight">Top right pixel location to start the crop.</param>
+        /// <param name="bottomLeft">Bottom left pixel location to start the crop.</param>
+        /// <param name="bottomRight">Bottom right pixel location to start the crop.</param>
+        /// <returns>The current thumbor image object.</returns>
         public IThumborImage Crop(int topLeft, int topRight, int bottomLeft, int bottomRight)
         {
             this.cropCoordinates = string.Format("{0}x{1}:{2}x{3}", topLeft, topRight, bottomLeft, bottomRight);
             return this;
         }
 
+        /// <summary>
+        /// Sets the quality of the ouput image. See https://github.com/thumbor/thumbor/wiki/Quality for details.
+        /// Can be called multiple times with the last call overriding all previous calls.
+        /// </summary>
+        /// <param name="imageQuality">Value between 0 and 100 of the quality to use</param>
+        /// <returns>The current thumbor image object.</returns>
         public IThumborImage Quality(int imageQuality)
         {
             this.ReplaceOrAddFilter("quality", imageQuality.ToString(CultureInfo.InvariantCulture));
             return this;
         }
 
+        /// <summary>
+        /// Enables or disables the greyscale filter. See https://github.com/thumbor/thumbor/wiki/Grayscale for details.
+        /// Can be called multiple times with the last call overriding all previous calls.
+        /// </summary>
+        /// <param name="grayscaleImage">True to enable the filter and false to remove it.</param>
+        /// <returns>The current thumbor image object.</returns>
         public IThumborImage Grayscale(bool grayscaleImage)
         {
             if (!grayscaleImage)
@@ -127,12 +151,28 @@
             return this;
         }
 
+        /// <summary>
+        /// Adds a watermark image to this image. The watermark image can be the output of another thumbor image. See https://github.com/thumbor/thumbor/wiki/Watermark for details.
+        /// Can be called multiple times with each watermark being included on the base image. The last added watermark 
+        /// will overlay all previous watermarks if there is an overlap.
+        /// </summary>
+        /// <param name="watermarkImageUrl">URL to the image to use as a watermark. Can be the output of another thumbor image.</param>
+        /// <param name="right">How many pixels right the watermark should be.</param>
+        /// <param name="down">How many pixels down the watermark should be.</param>
+        /// <param name="transparency">Watermark image transparency 0 = opaque - 100 fully transparent</param>
+        /// <returns></returns>
         public IThumborImage Watermark(string watermarkImageUrl, int right, int down, int transparency)
         {
             this.watermarks.Add(string.Format("watermark({0},{1},{2},{3})", watermarkImageUrl, right, down, transparency));
             return this;
         }
 
+        /// <summary>
+        /// 
+        /// Can be called multiple times with the last call overriding all previous calls.
+        /// </summary>
+        /// <param name="fillInColour"></param>
+        /// <returns></returns>
         public IThumborImage Fill(string fillInColour)
         {
             this.ReplaceOrAddFilter("fill", fillInColour);
