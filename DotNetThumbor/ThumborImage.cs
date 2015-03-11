@@ -59,6 +59,8 @@
 
         private string roundCorners;
 
+        private int? rotate;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -238,6 +240,12 @@
             return this;
         }
 
+        public IThumborImage Rotate(int? imageRotateAngle)
+        {
+            this.rotate = imageRotateAngle;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -394,6 +402,11 @@
             if (!string.IsNullOrEmpty(this.roundCorners))
             {
                 filters.Add(this.roundCorners);
+            }
+
+            if (this.rotate != null)
+            {
+                filters.Add(string.Format("rotate({0})", this.rotate));
             }
 
             if (filters.Count != 0)

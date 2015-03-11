@@ -62,5 +62,7 @@
         IThumborImage Rgb(int red, int green, int blue);
 
         IThumborImage RoundCorners(int radiusA, int? radiusB, int red, int green, int blue);
+
+        IThumborImage Rotate(int? imageRotateAngle);
     }
 }

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="TestThumbor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestThumborFilters\TestRotate.cs" />
     <Compile Include="TestThumborFilters\TestColorize.cs" />
     <Compile Include="TestThumborFilters\TestBrightness.cs" />
     <Compile Include="TestThumborFilters\TestContrast.cs" />
