@@ -63,6 +63,8 @@
     <Compile Include="TestThumborFilters\TestBrightness.cs" />
     <Compile Include="TestThumborFilters\TestContrast.cs" />
     <Compile Include="TestThumborFilters\TestEqualize.cs" />
+    <Compile Include="TestThumborFilters\TestFill.cs" />
+    <Compile Include="TestThumborFilters\TestFormat.cs" />
     <Compile Include="TestThumborSigner.cs" />
     <Compile Include="TestThumborImage.cs" />
   </ItemGroup>

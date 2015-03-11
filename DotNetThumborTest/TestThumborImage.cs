@@ -203,31 +203,6 @@
         }
 
         [Test]
-        [TestCase(Thumbor.ImageFormat.Jpeg)]
-        [TestCase(Thumbor.ImageFormat.Png)]
-        [TestCase(Thumbor.ImageFormat.Gif)]
-        [TestCase(Thumbor.ImageFormat.Webp)]
-        public void ThumborFormat(Thumbor.ImageFormat format)
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Format(format)
-                                    .ToUrl();
-            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:format({0})/http://localhost/image.jpg", format.ToString().ToLower()));
-        }
-
-        [Test]
-        public void ThumborFormatIgnoresFirst()
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Format(Thumbor.ImageFormat.Png)
-                                    .Format(Thumbor.ImageFormat.Gif)
-                                    .ToUrl();
-            resizedUrl.Should().Be("http://localhost/unsafe/filters:format(gif)/http://localhost/image.jpg");
-        }
-
-        [Test]
         public void ThumborCrop()
         {
             var thumbor = new Thumbor("http://localhost/");
@@ -340,30 +315,6 @@
                                     .Watermark(watermark, 0, 0, 50)
                                     .ToUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:watermark(http://localhost/unsafe/http://localhost/watermark.png,0,0,50)/http://localhost/image.jpg");
-        }
-
-        [Test]
-        [TestCase("blue")]
-        [TestCase("auto")]
-        [TestCase("FF0000")]
-        public void ThumborFilling(string fillColour)
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Fill(fillColour)
-                                    .ToUrl();
-            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:fill({0})/http://localhost/image.jpg", fillColour));
-        }
-
-        [Test]
-        public void ThumborFillingFirstIgnored()
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Fill("blue")
-                                    .Fill("red")
-                                    .ToUrl();
-            resizedUrl.Should().Be("http://localhost/unsafe/filters:fill(red)/http://localhost/image.jpg");
         }
 
         [Test]
