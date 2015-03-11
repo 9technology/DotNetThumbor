@@ -74,6 +74,8 @@
 
         private bool extractFocal;
 
+        private string gifVOption;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -296,6 +298,14 @@
             return this;
         }
 
+        public IThumborImage GifV(Thumbor.ImageGifVOption imageGifVOption)
+        {
+            this.gifVOption = string.Format(
+                "gifv({0})",
+                imageGifVOption == Thumbor.ImageGifVOption.None ? string.Empty : imageGifVOption.ToString().ToLower());
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -487,6 +497,11 @@
             if (this.extractFocal)
             {
                 filters.Add("extract_focal()");
+            }
+
+            if (!string.IsNullOrEmpty(this.gifVOption))
+            {
+                filters.Add(this.gifVOption);
             }
 
             if (filters.Count != 0)

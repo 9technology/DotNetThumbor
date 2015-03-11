@@ -93,6 +93,19 @@
             Bottom
         }
 
+        public enum ImageGifVOption
+        {
+            /// <summary>
+            /// Default. Convert gif to mp4.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Convert gif to webm.
+            /// </summary>
+            Webm
+        }
+
         /// <summary>
         /// Builds the thumbor image url based on the URL supplied and returns an thumbor image
         /// to which thumbor operations can be applied to.

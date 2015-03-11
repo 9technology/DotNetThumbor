@@ -78,5 +78,7 @@
         IThumborImage Blur(int blurRadius, int? blurSigma);
 
         IThumborImage ExtractFocal();
+
+        IThumborImage GifV(Thumbor.ImageGifVOption imageGifVOption);
     }
 }
