@@ -70,6 +70,8 @@
 
         private string convolution;
 
+        private string blur;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -280,6 +282,12 @@
             return this;
         }
 
+        public IThumborImage Blur(int blurRadius, int? blurSigma)
+        {
+            this.blur = blurSigma == null ? blurRadius.ToString() : blurRadius + "," + blurSigma;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -461,6 +469,11 @@
             if (!string.IsNullOrEmpty(this.convolution))
             {
                 filters.Add(this.convolution);
+            }
+
+            if (!string.IsNullOrEmpty(this.blur))
+            {
+                filters.Add(string.Format("blur({0})", this.blur));
             }
 
             if (filters.Count != 0)
