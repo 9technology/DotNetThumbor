@@ -1,8 +1,11 @@
 ﻿namespace DotNetThumbor
 {
     using System;
+
     using System.Collections.Generic;
+
     using System.Globalization;
+
     using System.Linq;
 
     public class ThumborImage : IThumborImage
@@ -348,6 +351,42 @@
                 urlParts.Add(this.fitin);
             }
 
+            var widthHeight = this.GetWidthAndHeight();
+            if (widthHeight != null)
+            {
+                urlParts.Add(widthHeight);
+            }
+
+            if (this.horizontalAlign != Thumbor.ImageHorizontalAlign.Center)
+            {
+                urlParts.Add(this.horizontalAlign.ToString().ToLower());
+            }
+
+            if (this.verticalAlign != Thumbor.ImageVerticalAlign.Middle)
+            {
+                urlParts.Add(this.verticalAlign.ToString().ToLower());
+            }
+
+            if (this.smartImage)
+            {
+                urlParts.Add("smart");
+            }
+
+            var methodFilters = this.filters.Select(x => string.Format("{0}({1})", x.Key, x.Value)).ToList();
+            methodFilters.AddRange(this.watermarks);
+
+            if (methodFilters.Count() != 0)
+            {
+                urlParts.Add(string.Format("filters:{0}", string.Join(":", methodFilters)));
+            }
+
+            urlParts.Add(this.imageUrl.ToString());
+
+            return string.Join("/", urlParts);
+        }
+
+        private string GetWidthAndHeight()
+        {
             if (this.width != null || this.height != null)
             {
                 string widthString;
@@ -380,35 +419,10 @@
                     heightString = this.height.ToString();
                 }
 
-                urlParts.Add(widthString + "x" + heightString);
+                return string.Format("{0}x{1}", widthString, heightString);
             }
 
-            if (this.horizontalAlign != Thumbor.ImageHorizontalAlign.Center)
-            {
-                urlParts.Add(this.horizontalAlign.ToString().ToLower());
-            }
-
-            if (this.verticalAlign != Thumbor.ImageVerticalAlign.Middle)
-            {
-                urlParts.Add(this.verticalAlign.ToString().ToLower());
-            }
-
-            if (this.smartImage)
-            {
-                urlParts.Add("smart");
-            }
-
-            var methodFilters = this.filters.Select(x => string.Format("{0}({1})", x.Key, x.Value)).ToList();
-            methodFilters.AddRange(this.watermarks);
-
-            if (methodFilters.Count() != 0)
-            {
-                urlParts.Add("filters:" + string.Join(":", methodFilters));
-            }
-
-            urlParts.Add(this.imageUrl.ToString());
-
-            return string.Join("/", urlParts);
+            return null;
         }
 
         private void ReplaceOrAddFilter(string filterName, string filterOptions)
