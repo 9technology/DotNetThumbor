@@ -159,17 +159,6 @@
             return this;
         }
 
-        public override string ToString()
-        {
-            return this.ToUrl();
-        }
-
-        public string ToUnsafeUrl()
-        {
-            var server = this.thumborServerUrl + "unsafe/";
-            return server + this.FormatUrlParts();
-        }
-
         public IThumborImage Brightness(int imageBrightness)
         {
             this.ReplaceOrAddFilter("brightness", imageBrightness.ToString(CultureInfo.InvariantCulture));
@@ -310,6 +299,17 @@
             return this;
         }
 
+        public override string ToString()
+        {
+            return this.ToUrl();
+        }
+
+        public string ToUnsafeUrl()
+        {
+            var unsafeImageUrl = string.Format("{0}unsafe/{1}", this.thumborServerUrl, this.FormatUrlParts());
+            return unsafeImageUrl;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -323,9 +323,10 @@
             }
 
             var urlparts = this.FormatUrlParts();
-            var server = this.thumborServerUrl + this.thumborSigner.Encode(urlparts, this.thumborSecretKey) + "/";
+            var signedKey = this.thumborSigner.Encode(urlparts, this.thumborSecretKey);
+            var signedImageUrl = string.Format("{0}{1}/{2}", this.thumborServerUrl, signedKey, urlparts);
 
-            return server + urlparts;
+            return signedImageUrl;
         }
 
         private string FormatUrlParts()
