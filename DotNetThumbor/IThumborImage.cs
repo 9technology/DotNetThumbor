@@ -48,5 +48,7 @@
         IThumborImage Brightness(int brightness);
 
         IThumborImage Contrast(int contrast);
+
+        IThumborImage Colorize(int redPercentage, int greenPercentage, int bluePercentage, string fillColor);
     }
 }

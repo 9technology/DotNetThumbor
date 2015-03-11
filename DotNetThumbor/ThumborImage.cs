@@ -45,6 +45,8 @@
 
         private int? contrast;
 
+        private string colorize;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -177,6 +179,12 @@
             return this;
         }
 
+        public IThumborImage Colorize(int redPercentage, int greenPercentage, int bluePercentage, string fillColor)
+        {
+            this.colorize = string.Format("colorize({0},{1},{2},{3})", redPercentage, greenPercentage, bluePercentage, fillColor);
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -298,6 +306,11 @@
             if (this.contrast != null)
             {
                 filters.Add(string.Format("contrast({0})", this.contrast));
+            }
+
+            if (!string.IsNullOrEmpty(this.colorize))
+            {
+                filters.Add(this.colorize);
             }
 
             if (filters.Count != 0)
