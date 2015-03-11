@@ -61,6 +61,8 @@
 
         private int? rotate;
 
+        private double? saturation;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -246,6 +248,12 @@
             return this;
         }
 
+        public IThumborImage Saturation(double? imageSaturation)
+        {
+            this.saturation = imageSaturation;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -407,6 +415,11 @@
             if (this.rotate != null)
             {
                 filters.Add(string.Format("rotate({0})", this.rotate));
+            }
+
+            if (this.saturation != null)
+            {
+                filters.Add(string.Format("saturation({0})", this.saturation));
             }
 
             if (filters.Count != 0)
