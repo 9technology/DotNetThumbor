@@ -251,37 +251,6 @@
         }
 
         [Test]
-        public void ThumborGrayscale()
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Grayscale(true)
-                                    .ToUrl();
-            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:grayscale()/http://localhost/image.jpg"));
-        }
-
-        [Test]
-        public void ThumborNotGrayscale()
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Grayscale(false)
-                                    .ToUrl();
-            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
-        }
-
-        [Test]
-        public void ThumborGrayscaleFirstIgnored()
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Grayscale(true)
-                                    .Grayscale(false)
-                                    .ToUrl();
-            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
-        }
-
-        [Test]
         [TestCase("http://image.url", 1, 2, 3)]
         [TestCase("http://localhost/image.jpg", 99, 23, 42)]
         public void ThumborWatermark(string imageUrl, int right, int down, int transparency)

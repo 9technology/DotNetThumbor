@@ -52,5 +52,7 @@
         IThumborImage Colorize(int redPercentage, int greenPercentage, int bluePercentage, string fillColor);
 
         IThumborImage Equalize(bool equalizeImage);
+
+        IThumborImage MaxBytes(int? imageMaxBytes);
     }
 }

@@ -47,8 +47,9 @@
 
         private string colorize;
 
-        private bool equalize
-            ;
+        private bool equalize;
+
+        private int? maxBytes;
 
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
@@ -194,6 +195,12 @@
             return this;
         }
 
+        public IThumborImage MaxBytes(int? imageMaxBytes)
+        {
+            this.maxBytes = imageMaxBytes;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -325,6 +332,11 @@
             if (this.equalize)
             {
                 filters.Add("equalize()");
+            }
+
+            if (this.maxBytes != null)
+            {
+                filters.Add(string.Format("max_bytes({0})", this.maxBytes));
             }
 
             if (filters.Count != 0)
