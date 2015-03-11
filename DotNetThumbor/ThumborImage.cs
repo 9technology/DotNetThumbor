@@ -7,13 +7,15 @@
 
     public class ThumborImage : IThumborImage
     {
+        private readonly List<string> watermarks = new List<string>();
+
         private readonly ThumborSigner thumborSigner;
 
         private readonly string thumborSecretKey;
 
         private readonly Uri thumborServerUrl;
 
-        private Uri imageUrl;
+        private readonly Uri imageUrl;
 
         private bool smartImage;
 
@@ -28,8 +30,6 @@
         private int? quality;
 
         private bool grayscale;
-
-        private List<string> watermarks = new List<string>();
 
         private string fillColour;
 
@@ -539,6 +539,7 @@
             {
                 filters.Add(this.curve);
             }
+
             return filters;
         }
     }

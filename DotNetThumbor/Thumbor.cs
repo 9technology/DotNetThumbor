@@ -4,25 +4,37 @@
 
     public class Thumbor : IThumbor
     {
+        /// <summary>
+        /// The thumbor secret key.
+        /// </summary>
         private readonly string thumborSecretKey;
 
+        /// <summary>
+        /// The thumbor server url.
+        /// </summary>
         private readonly Uri thumborServerUrl;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Thumbor"/> class. 
         /// Creates a thumbor factory without signed image URL's
         /// </summary>
-        /// <param name="thumborServerUrl">URL to the thumbor server EG http://mythumborserver.com/ </param>
+        /// <param name="thumborServerUrl">
+        /// URL to the thumbor server EG http://mythumborserver.com/ 
+        /// </param>
         public Thumbor(string thumborServerUrl)
         {
             this.thumborServerUrl = new Uri(thumborServerUrl);
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Thumbor"/> class. 
         /// Creates a thumbor factory which supports signed image URL's using the supplied key which should be the same
         /// as the targetted thumbor server
         /// </summary>
-        /// <param name="thumborServerUrl"></param>
-        /// <param name="thumborSecretKey"></param>
+        /// <param name="thumborServerUrl">
+        /// </param>
+        /// <param name="thumborSecretKey">
+        /// </param>
         public Thumbor(string thumborServerUrl, string thumborSecretKey)
         {
             this.thumborSecretKey = thumborSecretKey;
