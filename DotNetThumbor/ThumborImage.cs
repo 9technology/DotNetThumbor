@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
 
     public class ThumborImage : IThumborImage
     {
@@ -62,6 +63,8 @@
         private int? rotate;
 
         private double? saturation;
+
+        private string sharpen;
 
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
@@ -235,7 +238,7 @@
         {
             this.roundCorners = string.Format(
                 "round_corners({0},{1},{2},{3})",
-                radiusB == null ? radiusA.ToString() : string.Format("{0}|{1}", radiusA, radiusB),
+                radiusB == null ? radiusA.ToString(CultureInfo.InvariantCulture) : string.Format("{0}|{1}", radiusA, radiusB),
                 red,
                 green,
                 blue);
@@ -251,6 +254,13 @@
         public IThumborImage Saturation(double? imageSaturation)
         {
             this.saturation = imageSaturation;
+            return this;
+        }
+
+        public IThumborImage Sharpen(double sharpenAmount, double sharpenRadius, bool luminance)
+        {
+            this.sharpen = string.Format(
+                "sharpen({0},{1},{2})", sharpenAmount, sharpenRadius, luminance.ToString().ToLower());
             return this;
         }
 
@@ -420,6 +430,11 @@
             if (this.saturation != null)
             {
                 filters.Add(string.Format("saturation({0})", this.saturation));
+            }
+
+            if (!string.IsNullOrEmpty(this.sharpen))
+            {
+                filters.Add(this.sharpen);
             }
 
             if (filters.Count != 0)

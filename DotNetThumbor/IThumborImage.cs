@@ -66,5 +66,7 @@
         IThumborImage Rotate(int? imageRotateAngle);
 
         IThumborImage Saturation(double? imageSaturation);
+
+        IThumborImage Sharpen(double sharpenAmount, double sharpenRadius, bool luminance);
     }
 }
