@@ -68,5 +68,7 @@
         IThumborImage Saturation(double? imageSaturation);
 
         IThumborImage Sharpen(double sharpenAmount, double sharpenRadius, bool luminance);
+
+        IThumborImage StripIcc(bool stripIccFromImage);
     }
 }

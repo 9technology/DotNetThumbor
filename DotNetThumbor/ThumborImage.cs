@@ -66,6 +66,8 @@
 
         private string sharpen;
 
+        private bool stripIcc;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -264,6 +266,12 @@
             return this;
         }
 
+        public IThumborImage StripIcc(bool stripIccFromImage)
+        {
+            this.stripIcc = stripIccFromImage;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -435,6 +443,11 @@
             if (!string.IsNullOrEmpty(this.sharpen))
             {
                 filters.Add(this.sharpen);
+            }
+
+            if (this.stripIcc)
+            {
+                filters.Add("strip_icc()");
             }
 
             if (filters.Count != 0)
