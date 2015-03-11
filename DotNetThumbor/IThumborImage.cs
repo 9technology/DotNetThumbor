@@ -1,5 +1,6 @@
 ﻿namespace DotNetThumbor
 {
+    using System;
     using System.Collections.Generic;
 
     public interface IThumborImage
@@ -80,5 +81,11 @@
         IThumborImage ExtractFocal();
 
         IThumborImage GifV(Thumbor.ImageGifVOption imageGifVOption);
+
+        IThumborImage Curve(
+            IList<Tuple<int, int>> curveAll,
+            IList<Tuple<int, int>> curveRed,
+            IList<Tuple<int, int>> curveGreen,
+            IList<Tuple<int, int>> curveBlue);
     }
 }

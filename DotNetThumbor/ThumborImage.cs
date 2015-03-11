@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
 
     public class ThumborImage : IThumborImage
     {
@@ -75,6 +76,8 @@
         private bool extractFocal;
 
         private string gifVOption;
+
+        private string curve;
 
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
@@ -306,6 +309,17 @@
             return this;
         }
 
+        public IThumborImage Curve(IList<Tuple<int, int>> curveAll, IList<Tuple<int, int>> curveRed, IList<Tuple<int, int>> curveGreen, IList<Tuple<int, int>> curveBlue)
+        {
+            this.curve = string.Format(
+                "curve([{0}],[{1}],[{2}],[{3}])",
+                string.Join(",",   curveAll.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))),
+                string.Join(",",   curveRed.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))), 
+                string.Join(",", curveGreen.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))), 
+                string.Join(",",  curveBlue.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))));
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -502,6 +516,11 @@
             if (!string.IsNullOrEmpty(this.gifVOption))
             {
                 filters.Add(this.gifVOption);
+            }
+
+            if (!string.IsNullOrEmpty(this.curve))
+            {
+                filters.Add(this.curve);
             }
 
             if (filters.Count != 0)
