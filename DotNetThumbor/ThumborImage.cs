@@ -68,6 +68,8 @@
 
         private bool stripIcc;
 
+        private string convolution;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -272,6 +274,12 @@
             return this;
         }
 
+        public IThumborImage Convolution(IList<int> matrix, int columns, bool shouldNormalise)
+        {
+            this.convolution = string.Format("convolution({0},{1},{2})", string.Join(";", matrix), columns, shouldNormalise.ToString().ToLower());
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -448,6 +456,11 @@
             if (this.stripIcc)
             {
                 filters.Add("strip_icc()");
+            }
+
+            if (!string.IsNullOrEmpty(this.convolution))
+            {
+                filters.Add(this.convolution);
             }
 
             if (filters.Count != 0)

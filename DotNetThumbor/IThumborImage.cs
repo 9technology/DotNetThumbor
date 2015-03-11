@@ -1,5 +1,7 @@
 ﻿namespace DotNetThumbor
 {
+    using System.Collections.Generic;
+
     public interface IThumborImage
     {
         IThumborImage Resize(int? newWidth, int? newHeight);
@@ -70,5 +72,7 @@
         IThumborImage Sharpen(double sharpenAmount, double sharpenRadius, bool luminance);
 
         IThumborImage StripIcc(bool stripIccFromImage);
+
+        IThumborImage Convolution(IList<int> matrix, int columns, bool shouldNormalise);
     }
 }
