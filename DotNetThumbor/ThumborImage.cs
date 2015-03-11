@@ -7,6 +7,8 @@
 
     public class ThumborImage : IThumborImage
     {
+        private readonly ThumborSigner thumborSigner;
+
         private readonly string thumborSecretKey;
 
         private readonly Uri thumborServerUrl;
@@ -79,7 +81,7 @@
 
         private string curve;
 
-        public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
+        public ThumborImage(ThumborSigner thumborSigner, Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
             {
@@ -90,6 +92,7 @@
                 throw new ArgumentException("Invalid URL", ex);
             }
 
+            this.thumborSigner = thumborSigner;
             this.thumborSecretKey = thumborSecretKey;
             this.thumborServerUrl = thumborServerUrl;
         }
@@ -333,7 +336,7 @@
             }
 
             var urlparts = this.FormatUrlParts();
-            var server = this.thumborServerUrl + ThumborSigner.Encode(urlparts, this.thumborSecretKey) + "/";
+            var server = this.thumborServerUrl + this.thumborSigner.Encode(urlparts, this.thumborSecretKey) + "/";
 
             return server + urlparts;
         }
@@ -407,6 +410,20 @@
                 urlParts.Add("smart");
             }
 
+            var filters = this.BuildFilters();
+
+            if (filters.Count != 0)
+            {
+                urlParts.Add("filters:" + string.Join(":", filters));
+            }
+
+            urlParts.Add(this.imageUrl.ToString());
+
+            return string.Join("/", urlParts);
+        }
+
+        private List<string> BuildFilters()
+        {
             var filters = new List<string>();
             if (this.outputFormat != Thumbor.ImageFormat.None)
             {
@@ -522,15 +539,7 @@
             {
                 filters.Add(this.curve);
             }
-
-            if (filters.Count != 0)
-            {
-                urlParts.Add("filters:" + string.Join(":", filters));
-            }
-
-            urlParts.Add(this.imageUrl.ToString());
-
-            return string.Join("/", urlParts);
+            return filters;
         }
     }
 }

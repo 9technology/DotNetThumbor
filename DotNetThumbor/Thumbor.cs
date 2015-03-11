@@ -114,7 +114,7 @@
         /// <returns>Implementation of a thumbor image which thumber operations can be applied to</returns>
         public IThumborImage BuildImage(string imageUrl)
         {
-            return new ThumborImage(this.thumborServerUrl, this.thumborSecretKey, imageUrl);
+            return new ThumborImage(new ThumborSigner(), this.thumborServerUrl, this.thumborSecretKey, imageUrl);
         }       
     }
 }

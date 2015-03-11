@@ -7,7 +7,7 @@
 
     public class ThumborSigner
     {
-        public static string Encode(string input, string key)
+        public string Encode(string input, string key)
         {
             var hmacsha1 = new HMACSHA1(Encoding.UTF8.GetBytes(key));
             var byteArray = Encoding.UTF8.GetBytes(input);
