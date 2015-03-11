@@ -32,8 +32,10 @@
         /// as the targetted thumbor server
         /// </summary>
         /// <param name="thumborServerUrl">
+        /// URL to the thumbor server EG http://mythumborserver.com/ 
         /// </param>
         /// <param name="thumborSecretKey">
+        /// The secret key used by the thumbor server for signing URL's
         /// </param>
         public Thumbor(string thumborServerUrl, string thumborSecretKey)
         {
