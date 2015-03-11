@@ -60,6 +60,7 @@
     <Compile Include="TestThumbor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestThumborFilters\TestBrightness.cs" />
+    <Compile Include="TestThumborFilters\TestContrast.cs" />
     <Compile Include="TestThumborSigner.cs" />
     <Compile Include="TestThumborImage.cs" />
   </ItemGroup>

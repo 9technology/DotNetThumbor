@@ -43,6 +43,8 @@
 
         private int? brightness;
 
+        private int? contrast;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -169,6 +171,12 @@
             return this;
         }
 
+        public IThumborImage Contrast(int imageContrast)
+        {
+            this.contrast = imageContrast;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -285,6 +293,11 @@
             if (this.brightness != null)
             {
                 filters.Add(string.Format("brightness({0})", this.brightness));
+            }
+
+            if (this.contrast != null)
+            {
+                filters.Add(string.Format("contrast({0})", this.contrast));
             }
 
             if (filters.Count != 0)
