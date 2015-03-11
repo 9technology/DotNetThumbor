@@ -56,5 +56,7 @@
         IThumborImage MaxBytes(int? imageMaxBytes);
 
         IThumborImage Noise(int? imageNoise);
+
+        IThumborImage NoUpscale(bool noUpscaleImage);
     }
 }

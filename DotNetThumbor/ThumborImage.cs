@@ -53,6 +53,8 @@
 
         private int? noise;
 
+        private bool noUpscale;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -209,6 +211,12 @@
             return this;
         }
 
+        public IThumborImage NoUpscale(bool noUpscaleImage)
+        {
+            this.noUpscale = noUpscaleImage;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -350,6 +358,11 @@
             if (this.noise != null)
             {
                 filters.Add(string.Format("noise({0})", this.noise));
+            }
+
+            if (this.noUpscale)
+            {
+                filters.Add("no_upscale()");
             }
 
             if (filters.Count != 0)
