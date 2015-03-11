@@ -67,6 +67,7 @@
     <Compile Include="TestThumborFilters\TestFormat.cs" />
     <Compile Include="TestThumborFilters\TestGrayscale.cs" />
     <Compile Include="TestThumborFilters\TestMaxBytes.cs" />
+    <Compile Include="TestThumborFilters\TestNoise.cs" />
     <Compile Include="TestThumborSigner.cs" />
     <Compile Include="TestThumborImage.cs" />
   </ItemGroup>

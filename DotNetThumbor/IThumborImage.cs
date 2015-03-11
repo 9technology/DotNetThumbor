@@ -54,5 +54,7 @@
         IThumborImage Equalize(bool equalizeImage);
 
         IThumborImage MaxBytes(int? imageMaxBytes);
+
+        IThumborImage Noise(int? imageNoise);
     }
 }

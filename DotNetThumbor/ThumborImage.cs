@@ -51,6 +51,8 @@
 
         private int? maxBytes;
 
+        private int? noise;
+
         public ThumborImage(Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
             try
@@ -201,6 +203,12 @@
             return this;
         }
 
+        public IThumborImage Noise(int? imageNoise)
+        {
+            this.noise = imageNoise;
+            return this;
+        }
+
         public string ToUrl()
         {
             if (this.imageUrl == null)
@@ -337,6 +345,11 @@
             if (this.maxBytes != null)
             {
                 filters.Add(string.Format("max_bytes({0})", this.maxBytes));
+            }
+
+            if (this.noise != null)
+            {
+                filters.Add(string.Format("noise({0})", this.noise));
             }
 
             if (filters.Count != 0)
