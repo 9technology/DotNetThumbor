@@ -224,33 +224,6 @@
         }
 
         [Test]
-        [TestCase(-100)]
-        [TestCase(0)]
-        [TestCase(1)]
-        [TestCase(99)]
-        [TestCase(100)]
-        [TestCase(1000)]
-        public void ThumborQuality(int quality)
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Quality(quality)
-                                    .ToUrl();
-            resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:quality({0})/http://localhost/image.jpg", quality.ToString(CultureInfo.InvariantCulture)));
-        }
-
-        [Test]
-        public void ThumborQualitySetTwiceFirstIgnored()
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
-                                    .Quality(10)
-                                    .Quality(99)
-                                    .ToUrl();
-            resizedUrl.Should().Be("http://localhost/unsafe/filters:quality(99)/http://localhost/image.jpg");
-        }
-
-        [Test]
         [TestCase("http://image.url", 1, 2, 3)]
         [TestCase("http://localhost/image.jpg", 99, 23, 42)]
         public void ThumborWatermark(string imageUrl, int right, int down, int transparency)
