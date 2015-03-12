@@ -18,32 +18,32 @@ var thumbor = new Thumbor("http://example.com/", "key");
 
 ```C#
 thumbor.BuildImage("http://example.com/image.png")
-    .Resize(48, 48)
-    .ToUrl()
+       .Resize(48, 48)
+       .ToUrl()
 // Produces: http://example.com/unsafe/48x48/example.com/image.png
 
 thumbor.BuildImage("http://example.com/image.png")
-    .Crop(10, 10, 90, 90)
-    .Resize(40, 40)
-    .Smart()
-    .ToUrl()
+       .Crop(10, 10, 90, 90)
+       .Resize(40, 40)
+       .Smart()
+       .ToUrl()
 // Produces: http://example.com/unsafe/10x10:90x90/smart/40x40/example.com/image.png
 
-thumbor.buildImage("http://example.com/image.png")
-    .Crop(5, 5, 195, 195)
-    .Resize(95, 95)
-    .HorizontalAlign(Thumbor.ImageHorizontalAlign.Right)
-    .VerticalAlign(Thumbor.ImageVerticalAlign.Bottom)
-    .ToUrl()
+thumbor.BuildImage("http://example.com/image.png")
+       .Crop(5, 5, 195, 195)
+       .Resize(95, 95)
+       .HorizontalAlign(Thumbor.ImageHorizontalAlign.Right)
+       .VerticalAlign(Thumbor.ImageVerticalAlign.Bottom)
+       .ToUrl()
 // Produces: http://example.com/unsafe/5x5:195x195/right/bottom/95x95/example.com/image.png
 
 thumbor.BuildImage("http://example.com/background.png")
-    .Resize(200, 100)
-    .RoundCorner(10),
-    .Watermark("http://example.com/overlay1.png"), 0, 0, 25),
-    .Watermark("http://example.com/overlay2.png"), 0, 100, 25),
-    .Quality(85)
-    .toUrl()
+       .Resize(200, 100)
+       .RoundCorner(10),
+       .Watermark("http://example.com/overlay1.png"), 0, 0, 25),
+       .Watermark("http://example.com/overlay2.png"), 0, 100, 25),
+       .Quality(85)
+       .ToUrl()
 // Produces: http://example.com/unsafe/200x100/filters:round_corner(10,255,255,255):watermark(http://example.com/overlay1.png,0,0,25):watermark(http://example.com/overlay2.png,0,100,25):quality(85)/http://example.com/background.png
 ```
 
