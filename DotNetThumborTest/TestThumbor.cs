@@ -37,7 +37,7 @@
         public void BuildUrlWithoutSecretKey(string url)
         {
             var thumbor = new Thumbor("http://localhost/");
-            var thumborUrl = thumbor.BuildUrl(url);
+            var thumborUrl = thumbor.BuildSignedUrl(url);
             thumborUrl.Should().Be("http://localhost/unsafe/trim/100x200/filters:grayscale()/http://myserver/myimage.jpg");
         }
 
@@ -46,8 +46,101 @@
         public void BuildUrlWithSecretKey(string url)
         {
             var thumbor = new Thumbor("http://localhost/", "secret_key");
-            var thumborUrl = thumbor.BuildUrl(url);
-            thumborUrl.Should().Be("http://localhost/3O6tySGiWNKehjeS1ARFGEnNMtU=/trim/100x200/filters:grayscale()/http://myserver/myimage.jpg");
+            var thumborUrl = thumbor.BuildSignedUrl(url);
+            thumborUrl.Should().Be("/3O6tySGiWNKehjeS1ARFGEnNMtU=/trim/100x200/filters:grayscale()/http://myserver/myimage.jpg");
+        }
+
+        // The following tests come from the Thumbor Library Test Scenarios
+        /*
+        Given
+            A security key of 'my-security-key'
+            And an image URL of "my.server.com/some/path/to/image.jpg"
+            And a width of 300
+            And a height of 200
+        When
+            I ask my library for a signed url
+        Then
+            I get '/8ammJH8D-7tXy6kU3lTvoXlhu4o=/300x200/my.server.com/some/path/to/image.jpg' as url
+         */
+        [Test]
+        public void TestScenario1()
+        {
+            var thumbor = new Thumbor("http://localhost/", "my-security-key");
+            var thumborUrl = thumbor.BuildSignedUrl("300x200/my.server.com/some/path/to/image.jpg");
+            thumborUrl.Should().Be("/8ammJH8D-7tXy6kU3lTvoXlhu4o=/300x200/my.server.com/some/path/to/image.jpg");
+        }
+
+        /*
+        Given
+            A security key of 'my-security-key'
+            And an image URL of "my.server.com/some/path/to/image.jpg"
+            And a width of 300
+            And a height of 200
+        When
+            I ask my library for an encrypted URL
+        Then
+            I get the proper url (/8ammJH8D-7tXy6kU3lTvoXlhu4o=/300x200/my.server.com/some/path/to/image.jpg)
+         */
+        [Test]
+        public void TestScenario2()
+        {
+            var thumbor = new Thumbor("http://localhost/", "my-security-key");
+            var thumborUrl = thumbor.BuildEncryptedUrl("300x200/my.server.com/some/path/to/image.jpg");
+            thumborUrl.Should().Be("/8ammJH8D-7tXy6kU3lTvoXlhu4o=/300x200/my.server.com/some/path/to/image.jpg");
+        }
+
+        /*
+        Given
+            A security key of 'my-security-key'
+            And an image URL of "my.server.com/some/path/to/image.jpg"
+            And the meta flag
+        When
+            I ask my library for an encrypted URL
+        Then
+            I get the proper url (/Ps3ORJDqxlSQ8y00T29GdNAh2CY=/meta/my.server.com/some/path/to/image.jpg)
+         */
+        [Test]
+        public void TestScenario3()
+        {
+            var thumbor = new Thumbor("http://localhost/", "my-security-key");
+            var thumborUrl = thumbor.BuildEncryptedUrl("meta/my.server.com/some/path/to/image.jpg");
+            thumborUrl.Should().Be("/Ps3ORJDqxlSQ8y00T29GdNAh2CY=/meta/my.server.com/some/path/to/image.jpg");
+        }
+
+        /*
+        Given
+            A security key of 'my-security-key'
+            And an image URL of "my.server.com/some/path/to/image.jpg"
+            And the smart flag
+        When
+            I ask my library for an encrypted URL
+        Then
+            I get the proper url (/-2NHpejRK2CyPAm61FigfQgJBxw=/smart/my.server.com/some/path/to/image.jpg)
+         */
+        [Test]
+        public void TestScenario4()
+        {
+            var thumbor = new Thumbor("http://localhost/", "my-security-key");
+            var thumborUrl = thumbor.BuildEncryptedUrl("smart/my.server.com/some/path/to/image.jpg");
+            thumborUrl.Should().Be("/-2NHpejRK2CyPAm61FigfQgJBxw=/smart/my.server.com/some/path/to/image.jpg");
+        }
+
+        /*
+        Given
+            A security key of 'my-security-key'
+            And an image URL of "my.server.com/some/path/to/image.jpg"
+            And the fit-in flag
+        When
+            I ask my library for an encrypted URL
+        Then
+            I get the proper url (/uvLnA6TJlF-Cc-L8z9pEtfasO3s=/fit-in/my.server.com/some/path/to/image.jpg)
+         */
+        [Test]
+        public void TestScenario5()
+        {
+            var thumbor = new Thumbor("http://localhost/", "my-security-key");
+            var thumborUrl = thumbor.BuildEncryptedUrl("fit-in/my.server.com/some/path/to/image.jpg");
+            thumborUrl.Should().Be("/-2NHpejRK2CyPAm61FigfQgJBxw=/smart/my.server.com/some/path/to/image.jpg");
         }
     }
 }

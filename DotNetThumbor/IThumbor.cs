@@ -4,6 +4,8 @@
     {
         ThumborImage BuildImage(string imageUrl);
 
-        string BuildUrl(string imageUrl);
+        string BuildSignedUrl(string imageUrl);
+
+        string BuildEncryptedUrl(string imageUrl);
     }
 }

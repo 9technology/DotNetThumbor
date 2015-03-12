@@ -151,10 +151,11 @@
 
         /// <summary>
         /// Given pregenerated thumbor image parameters return URL to the image with signed key if one exists.
+        /// NB should not include the leading /
         /// </summary>
-        /// <param name="imageUrl">The image to produce the URL for EG. /trim/100x200/filters:grayscale()/http://myserver/myimage.jpg </param>
+        /// <param name="imageUrl">The image to produce the URL for EG. trim/100x200/filters:grayscale()/http://myserver/myimage.jpg </param>
         /// <returns>String containing the URL with the signed image.</returns>
-        public string BuildUrl(string imageUrl)
+        public string BuildSignedUrl(string imageUrl)
         {
             if (string.IsNullOrEmpty(this.thumborSecretKey))
             {
@@ -163,7 +164,18 @@
 
             var thumborSigner = new ThumborSigner();
             var signedKey = thumborSigner.Encode(imageUrl, this.thumborSecretKey);
-            return string.Format("{0}{1}{2}", this.thumborServerUrl, signedKey, imageUrl);
+            return string.Format("/{0}/{1}", signedKey, imageUrl);
+        }
+
+        /// <summary>
+        /// Given pregenerated thumbor image parameters return URL to the image with signed key if one exists.
+        /// NB should not include the leading /
+        /// </summary>
+        /// <param name="imageUrl">The image to produce the URL for EG. trim/100x200/filters:grayscale()/http://myserver/myimage.jpg </param>
+        /// <returns>String containing the URL with the signed image.</returns>
+        public string BuildEncryptedUrl(string imageUrl)
+        {
+            return this.BuildSignedUrl(imageUrl);
         }
     }
 }
