@@ -123,7 +123,7 @@
         public enum ImageTrimOption
         {
             /// <summary>
-            /// Default. No trim option.
+            /// Default. No trim option will be included.
             /// </summary>
             None,
 
@@ -144,9 +144,26 @@
         /// </summary>
         /// <param name="imageUrl">URL to an image which thumbor need to be applied to</param>
         /// <returns>Implementation of a thumbor image which thumber operations can be applied to</returns>
-        public IThumborImage BuildImage(string imageUrl)
+        public ThumborImage BuildImage(string imageUrl)
         {
             return new ThumborImage(new ThumborSigner(), this.thumborServerUrl, this.thumborSecretKey, imageUrl);
-        }       
+        }
+
+        /// <summary>
+        /// Given pregenerated thumbor image parameters return URL to the image with signed key if one exists.
+        /// </summary>
+        /// <param name="imageUrl">The image to produce the URL for EG. /trim/100x200/filters:grayscale()/http://myserver/myimage.jpg </param>
+        /// <returns>String containing the URL with the signed image.</returns>
+        public string BuildUrl(string imageUrl)
+        {
+            if (string.IsNullOrEmpty(this.thumborSecretKey))
+            {
+                return string.Format("{0}unsafe{1}", this.thumborServerUrl, imageUrl);
+            }
+
+            var thumborSigner = new ThumborSigner();
+            var signedKey = thumborSigner.Encode(imageUrl, this.thumborSecretKey);
+            return string.Format("{0}{1}{2}", this.thumborServerUrl, signedKey, imageUrl);
+        }
     }
 }
