@@ -18,7 +18,8 @@
         [TestCase("httpnoturl")]
         public void TestThumborUrlIsARealUrl(string url)
         {
-            new Thumbor(url);
+            var thumbor = new Thumbor(url);
+            thumbor.Should().BeNull("This should never run");
         }
 
         [Test]
