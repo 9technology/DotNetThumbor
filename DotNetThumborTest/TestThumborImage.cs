@@ -1,5 +1,8 @@
 ﻿namespace DotNetThumborTest
 {
+    using System;
+    using System.Collections.Generic;
+
     using DotNetThumbor;
 
     using FluentAssertions;
@@ -393,17 +396,36 @@
             var resizedUrl = thumbor.BuildImage("https://localhost/image.jpg")
                                     .Trim(Thumbor.ImageTrimOption.TopLeft)
                                     .Resize(200, 400)
-                                    .Grayscale(true)
-                                    .Fill("blue")
-                                    .Quality(100)
-                                    .Watermark(watermark, 0, 10, 50)
                                     .Smart(true)
                                     .FitIn(true)
                                     .HorizontalAlign(Thumbor.ImageHorizontalAlign.Left)
                                     .VerticalAlign(Thumbor.ImageVerticalAlign.Bottom)
+                                    .Blur(1,2)
+                                    .Brightness(50)
+                                    .Colorize(1,2,3,"AAAAAA")
+                                    .Contrast(50)
+                                    .Convolution(new List<int> { 1, 2, 1 }, 3, false)
+                                    .Curve(new List<Tuple<int, int>> { Tuple.Create(1, 2) }, new List<Tuple<int, int>> { Tuple.Create(3, 4) }, new List<Tuple<int, int>> { Tuple.Create(5, 6) }, new List<Tuple<int, int>> { Tuple.Create(7, 8) })
+                                    .Equalize(true)
+                                    .ExtractFocal()
+                                    .Fill("blue")
                                     .Format(Thumbor.ImageFormat.Webp)
+                                    .GifV(Thumbor.ImageGifVOption.Webm)
+                                    .Grayscale(true)
+                                    .MaxBytes(100000)
+                                    .Noise(50)
+                                    .NoUpscale(true)
+                                    .Quality(100)
+                                    .Rgb(1,2,3)
+                                    .Rotate(90)
+                                    .RoundCorners(10, 20, 1, 2, 3)
+                                    .Saturation(1.7)
+                                    .Sharpen(5.0, 1.2, true)
+                                    .StripIcc(true)
+                                    .Watermark(watermark, 0, 10, 50)
                                     .ToUrl();
-            resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:grayscale():fill(blue):quality(100):format(webp):watermark(http://localhost/unsafe/-0x-0/https://localhost/watermark.png,0,10,50)/https://localhost/image.jpg");
+            // Verified as a value URL when used against internal thumbor server
+            resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:blur(1,2):brightness(50):colorize(1,2,3,AAAAAA):contrast(50):convolution(1;2;1,3,false):curve([(1,2)],[(3,4)],[(5,6)],[(7,8)]):equalize():extract_focal():fill(blue):format(webp):gifv(webm):grayscale():max_bytes(100000):noise(50):no_upscale():quality(100):rgb(1,2,3):rotate(90):round_corners(10|20,1,2,3):saturation(1.7):sharpen(5,1.2,true):strip_icc():watermark(http://localhost/unsafe/-0x-0/https://localhost/watermark.png,0,10,50)/https://localhost/image.jpg");
         }
 
         [Test]

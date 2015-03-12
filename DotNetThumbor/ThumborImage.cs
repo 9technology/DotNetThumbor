@@ -572,6 +572,10 @@
             return signedImageUrl;
         }
 
+        /// <summary>
+        /// The URL part order is important! Do not change it without consulting the Thumbor documentation
+        /// which can be found on github https://github.com/thumbor/thumbor/wiki
+        /// </summary>
         private string FormatUrlParts()
         {
             var urlParts = new List<string>();
