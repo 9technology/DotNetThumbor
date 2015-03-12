@@ -17,7 +17,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Blur(blurRadius, blurSigma)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:blur({0},{1})/http://localhost/image.jpg", blurRadius, blurSigma));
         }
 
@@ -29,7 +29,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Blur(blurRadius, null)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:blur({0})/http://localhost/image.jpg", blurRadius));
         }
     }

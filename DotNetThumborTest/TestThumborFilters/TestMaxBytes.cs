@@ -17,7 +17,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .MaxBytes(maxBytes)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:max_bytes({0})/http://localhost/image.jpg", maxBytes));
         }
     }

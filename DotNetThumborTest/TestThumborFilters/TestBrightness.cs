@@ -23,7 +23,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Brightness(brightness)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:brightness({0})/http://localhost/image.jpg", brightness.ToString(CultureInfo.InvariantCulture)));
         }
 
@@ -34,7 +34,7 @@
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Brightness(10)
                                     .Brightness(99)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:brightness(99)/http://localhost/image.jpg");
         }
     }

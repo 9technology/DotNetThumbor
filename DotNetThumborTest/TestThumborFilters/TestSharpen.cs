@@ -18,7 +18,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Sharpen(amount, radius, luminance)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:sharpen({0},{1},{2})/http://localhost/image.jpg", amount, radius, luminance.ToString().ToLower()));
         }
     }

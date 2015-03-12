@@ -15,7 +15,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .NoUpscale(true)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:no_upscale()/http://localhost/image.jpg"));
         }
 
@@ -25,7 +25,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .NoUpscale(false)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
         }
 
@@ -36,7 +36,7 @@
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .NoUpscale(true)
                                     .NoUpscale(false)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/http://localhost/image.jpg"));
         }
     }

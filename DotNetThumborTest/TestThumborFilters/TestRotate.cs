@@ -19,7 +19,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Rotate(imageRotateAngle)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:rotate({0})/http://localhost/image.jpg", imageRotateAngle));
         }
     }

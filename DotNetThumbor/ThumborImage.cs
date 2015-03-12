@@ -537,7 +537,7 @@
         /// <returns>The URL with the unsafe URL</returns>
         public string ToUnsafeUrl()
         {
-            var unsafeImageUrl = string.Format("{0}unsafe/{1}", this.thumborServerUrl, this.FormatUrlParts());
+            var unsafeImageUrl = string.Format("unsafe/{0}", this.FormatUrlParts());
             return unsafeImageUrl;
         }
 
@@ -559,9 +559,19 @@
 
             var urlparts = this.FormatUrlParts();
             var signedKey = this.thumborSigner.Encode(urlparts, this.thumborSecretKey);
-            var signedImageUrl = string.Format("{0}{1}/{2}", this.thumborServerUrl, signedKey, urlparts);
+            var signedImageUrl = string.Format("{0}/{1}", signedKey, urlparts);
 
             return signedImageUrl;
+        }
+
+        /// <summary>
+        /// Returns full url including the thumbor server.
+        /// </summary>
+        /// <returns>Signed or unsigned URL for the image</returns>
+        public string ToFullUrl()
+        {
+            var fullUrl = string.Format("{0}{1}", this.thumborServerUrl, this.ToUrl());
+            return fullUrl;
         }
 
         /// <summary>

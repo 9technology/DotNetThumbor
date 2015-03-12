@@ -19,7 +19,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Format(format)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:format({0})/http://localhost/image.jpg", format.ToString().ToLower()));
         }
 
@@ -30,7 +30,7 @@
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Format(Thumbor.ImageFormat.Png)
                                     .Format(Thumbor.ImageFormat.Gif)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:format(gif)/http://localhost/image.jpg");
         }
 
@@ -40,7 +40,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Format(Thumbor.ImageFormat.None)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/http://localhost/image.jpg");
         }
     }

@@ -23,7 +23,7 @@
                         new List<Tuple<int, int>> { Tuple.Create(3, 4) },
                         new List<Tuple<int, int>> { Tuple.Create(5, 6) },
                         new List<Tuple<int, int>> { Tuple.Create(7, 8) })
-                       .ToUrl();
+                       .ToFullUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:curve([(1,2)],[(3,4)],[(5,6)],[(7,8)])/http://localhost/image.jpg");
         }
 
@@ -38,7 +38,7 @@
                         new List<Tuple<int, int>> { Tuple.Create(3, 4) },
                         new List<Tuple<int, int>> { Tuple.Create(5, 6) },
                         new List<Tuple<int, int>> { Tuple.Create(7, 8) })
-                       .ToUrl();
+                       .ToFullUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:curve([],[(3,4)],[(5,6)],[(7,8)])/http://localhost/image.jpg");
         }
 
@@ -53,7 +53,7 @@
                         new List<Tuple<int, int>> { Tuple.Create(3, 4), Tuple.Create(13, 14) },
                         new List<Tuple<int, int>> { Tuple.Create(5, 6), Tuple.Create(15, 16) },
                         new List<Tuple<int, int>> { Tuple.Create(7, 8), Tuple.Create(17, 18) })
-                       .ToUrl();
+                       .ToFullUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:curve([(1,2),(11,12)],[(3,4),(13,14)],[(5,6),(15,16)],[(7,8),(17,18)])/http://localhost/image.jpg");
         }
     }

@@ -23,7 +23,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Quality(quality)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:quality({0})/http://localhost/image.jpg", quality.ToString(CultureInfo.InvariantCulture)));
         }
 
@@ -34,7 +34,7 @@
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Quality(10)
                                     .Quality(99)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:quality(99)/http://localhost/image.jpg");
         }
     }

@@ -15,7 +15,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .GifV(Thumbor.ImageGifVOption.None)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:gifv()/http://localhost/image.jpg");
         }
 
@@ -25,7 +25,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .GifV(Thumbor.ImageGifVOption.Webm)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:gifv(webm)/http://localhost/image.jpg"));
         }
     }

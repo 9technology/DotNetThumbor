@@ -18,7 +18,7 @@
             var thumbor = new Thumbor("http://localhost/");
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Fill(fillColour)
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be(string.Format("http://localhost/unsafe/filters:fill({0})/http://localhost/image.jpg", fillColour));
         }
 
@@ -29,7 +29,7 @@
             var resizedUrl = thumbor.BuildImage("http://localhost/image.jpg")
                                     .Fill("blue")
                                     .Fill("red")
-                                    .ToUrl();
+                                    .ToFullUrl();
             resizedUrl.Should().Be("http://localhost/unsafe/filters:fill(red)/http://localhost/image.jpg");
         }
     }
