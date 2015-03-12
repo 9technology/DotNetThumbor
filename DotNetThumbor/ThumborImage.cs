@@ -17,7 +17,7 @@
 
         private readonly Uri thumborServerUrl;
 
-        private readonly Uri imageUrl;
+        private readonly string imageUrl;
 
         private bool smartImage;
 
@@ -49,15 +49,7 @@
         /// <param name="imageUrl">URL to the image that will be manipulated by Thumbor</param>
         public ThumborImage(ThumborSigner thumborSigner, Uri thumborServerUrl, string thumborSecretKey, string imageUrl)
         {
-            try
-            {
-                this.imageUrl = new Uri(imageUrl);
-            }
-            catch (UriFormatException ex)
-            {
-                throw new ArgumentException("Invalid URL", ex);
-            }
-
+            this.imageUrl = imageUrl;
             this.thumborSigner = thumborSigner;
             this.thumborSecretKey = thumborSecretKey;
             this.thumborServerUrl = thumborServerUrl;

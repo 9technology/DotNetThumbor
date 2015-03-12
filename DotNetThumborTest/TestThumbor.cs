@@ -23,17 +23,6 @@
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
-        [TestCase("")]
-        [TestCase("notaurl")]
-        [TestCase("httpnoturl")]
-        public void BuildImageWithInvalidUrl(string url)
-        {
-            var thumbor = new Thumbor("http://localhost/");
-            thumbor.BuildImage(url);
-        }
-
-        [Test]
         [TestCase("/trim/100x200/filters:grayscale()/http://myserver/myimage.jpg")]
         public void BuildUrlWithoutSecretKey(string url)
         {
