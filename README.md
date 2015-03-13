@@ -4,6 +4,13 @@ DotNetThumbor - C# Thumbor client by Mi9
 DotNet C# client for the [Thumbor image service][1] which allows you to build URIs 
 using a fluent API. This is loosly based on the Pollexor Java Library.
 
+Download
+--------
+
+Download via Nuget:
+
+https://www.nuget.org/packages/DotNetThumbor.dll/
+
 
 Examples
 --------
