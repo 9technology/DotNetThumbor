@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DotNetThumbor.dll</id>
+    <version>1.0</version>
+    <authors>Mi9</authors>
+    <owners>Mi9</owners>
+    <licenseUrl>https://github.com/mi9/DotNetThumbor/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/mi9/DotNetThumbor</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>DotNet library for the Thumbor image service which allows you to build URIs using a fluent API.</description>
+    <tags>thumbor image resizer</tags>
+  </metadata>
+</package>
