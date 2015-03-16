@@ -11,6 +11,7 @@ Download via Nuget:
 
 https://www.nuget.org/packages/DotNetThumbor.dll/
 
+Or build locally and import DLL into project.
 
 Examples
 --------
