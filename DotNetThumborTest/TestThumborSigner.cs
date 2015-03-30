@@ -27,5 +27,14 @@
 
             result.Should().Be("3GUda_RJ29Oev5a4JMOysmQZmQA=");
         }
+
+        [Test]
+        public void TestEncodeSignerWithSingleCharacter()
+        {
+            var thumborSigner = new ThumborSigner();
+            var result = thumborSigner.Encode("fit-in/200x200/http://example.org/input.jpg", "a");
+
+            result.Should().Be("0X5nlVGRT9gn6PgbvaZyxQNbgKQ=");
+        }
     }
 }
