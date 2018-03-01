@@ -1,8 +1,8 @@
-DotNetThumbor - C# Thumbor client by Mi9
+DotNetThumbor - C# Thumbor client by Nine Entertainment Co.
 ========================================
 
 DotNet C# client for the [Thumbor image service][1] which allows you to build URIs 
-using a fluent API. This is loosly based on the Pollexor Java Library.
+using a fluent API. This is loosely based on the Pollexor Java Library.
 
 Download
 --------
@@ -12,6 +12,8 @@ Download via Nuget:
 https://www.nuget.org/packages/DotNetThumbor.dll/
 
 Or build locally and import DLL into project.
+
+*Note:* Thumbor 3.0 and older encryption/key signing is not supported.
 
 Examples
 --------
@@ -55,25 +57,23 @@ thumbor.BuildImage("http://example.com/background.png")
 // Produces: http://example.com/unsafe/200x100/filters:round_corner(10,255,255,255):watermark(http://example.com/overlay1.png,0,0,25):watermark(http://example.com/overlay2.png,0,100,25):quality(85)/http://example.com/background.png
 ```
 
-*Note:* Thumbor 3.0 and older encryption/key signing is not supported.
-
 
 License
 =======
 
-Copyright (c) 2015, Mi9
+Copyright (c) 2015, Nine Entertainment Co.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of Mi9 nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
+ - Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+ - Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+ - Neither the name of Nine Entertainment Co. nor the
+   names of its contributors may be used to endorse or promote products
+   derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
