@@ -7,9 +7,7 @@
         <ExternalConsole>false</ExternalConsole>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-      <DebugType></DebugType>
+        <DebugType>
+        </DebugType>
     </PropertyGroup>
-    <ItemGroup>
-      <Compile Remove="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
 </Project>
