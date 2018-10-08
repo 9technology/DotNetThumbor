@@ -12,14 +12,12 @@
     public class TestThumbor
     {
         [Test]
-        [ExpectedException(typeof(UriFormatException))]
         [TestCase("")]
         [TestCase("notaurl")]
         [TestCase("httpnoturl")]
         public void TestThumborUrlIsARealUrl(string url)
         {
-            var thumbor = new Thumbor(url);
-            thumbor.Should().BeNull("This should never run");
+            Assert.That(() => new Thumbor(url), Throws.Exception.TypeOf<UriFormatException>());
         }
 
         [Test]
