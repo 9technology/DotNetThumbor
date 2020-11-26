@@ -87,5 +87,5 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
- [1]: https://github.com/globocom/thumbor
+ [1]: https://github.com/thumbor/thumbor
  
