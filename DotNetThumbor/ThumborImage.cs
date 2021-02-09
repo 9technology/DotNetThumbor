@@ -153,7 +153,7 @@
         /// <param name="down">How many pixels down the watermark should be.</param>
         /// <param name="transparency">Watermark image transparency 0 = opaque - 100 fully transparent</param>
         /// <returns>The current thumbor image object.</returns>
-        public ThumborImage Watermark(string watermarkImageUrl, int right, int down, int transparency)
+        public ThumborImage Watermark(string watermarkImageUrl, string right, string down, int transparency)
         {
             this.watermarks.Add(string.Format("watermark({0},{1},{2},{3})", watermarkImageUrl, right, down, transparency));
             return this;

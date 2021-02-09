@@ -431,7 +431,7 @@
                                     .Saturation(1.7)
                                     .Sharpen(5.0, 1.2, true)
                                     .StripIcc(true)
-                                    .Watermark(watermark, 0, 10, 50)
+                                    .Watermark(watermark, "0", "10", 50)
                                     .ToFullUrl();
             // Verified as a value URL when used against internal thumbor server
             resizedUrl.Should().Be("http://localhost/unsafe/trim/fit-in/200x400/left/bottom/smart/filters:blur(1,2):brightness(50):colorize(1,2,3,AAAAAA):contrast(50):convolution(1;2;1,3,false):curve([(1,2)],[(3,4)],[(5,6)],[(7,8)]):equalize():extract_focal():fill(blue):format(webp):gifv(webm):grayscale():max_bytes(100000):noise(50):no_upscale():quality(100):rgb(1,2,3):rotate(90):round_corners(10|20,1,2,3):saturation(1.7):sharpen(5,1.2,true):strip_icc():watermark(http://localhost/unsafe/-0x-0/https://localhost/watermark.png,0,10,50)/https://localhost/image.jpg");
@@ -453,7 +453,7 @@
             resizedUrlImage.Grayscale(true);
             resizedUrlImage.Fill("blue");
             resizedUrlImage.Quality(100);
-            resizedUrlImage.Watermark(watermark, 0, 10, 50);
+            resizedUrlImage.Watermark(watermark, "0", "10", 50);
             resizedUrlImage.Smart(true);
             resizedUrlImage.FitIn(true);
             resizedUrlImage.HorizontalAlign(Thumbor.ImageHorizontalAlign.Left);
