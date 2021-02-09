@@ -12,6 +12,9 @@
         [Test]
         [TestCase("http://image.url", "1", "2", 3)]
         [TestCase("http://localhost/image.jpg", "99", "23", 42)]
+        [TestCase("http://localhost/image.jpg", "center", "center", 42)]
+        [TestCase("http://localhost/image.jpg", "repeat", "repeat", 42)]
+        [TestCase("http://localhost/image.jpg", "20p", "20p", 42)]
         public void ThumborWatermark(string imageUrl, string right, string down, int transparency)
         {
             var thumbor = new Thumbor("http://localhost/");
