@@ -9,7 +9,7 @@
     {
         private readonly List<string> watermarks = new List<string>();
 
-        private readonly Dictionary<string, string> filters = new Dictionary<string, string>(); 
+        private readonly Dictionary<string, string> filters = new Dictionary<string, string>();
 
         private readonly ThumborSigner thumborSigner;
 
@@ -145,7 +145,7 @@
 
         /// <summary>
         /// Adds a watermark image to this image. The watermark image can be the output of another thumbor image. See https://github.com/thumbor/thumbor/wiki/Watermark for details.
-        /// Can be called multiple times with each watermark being included on the base image. The last added watermark 
+        /// Can be called multiple times with each watermark being included on the base image. The last added watermark
         /// will overlay all previous watermarks if there is an overlap.
         /// </summary>
         /// <param name="watermarkImageUrl">URL to the image to use as a watermark. Can be the output of another thumbor image.</param>
@@ -521,12 +521,23 @@
         {
             var curve = string.Format(
                 "[{0}],[{1}],[{2}],[{3}]",
-                string.Join(",",   curveAll.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))),
-                string.Join(",",   curveRed.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))), 
-                string.Join(",", curveGreen.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))), 
-                string.Join(",",  curveBlue.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))));
+                string.Join(",", curveAll.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))),
+                string.Join(",", curveRed.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))),
+                string.Join(",", curveGreen.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))),
+                string.Join(",", curveBlue.Select(x => string.Format("({0},{1})", x.Item1, x.Item2))));
 
             this.ReplaceOrAddFilter("curve", curve);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the background layer to the specified color. See https://thumbor.readthedocs.io/en/latest/background_color.html for details.
+        /// </summary>
+        /// <param name="color">The color name (like in HTML) or hexadecimal rgb expression without the “#” character (see https://en.wikipedia.org/wiki/Web_colors for example).</param>
+        /// <returns>The current thumbor image object.</returns>
+        public ThumborImage BackgroundColor(string color)
+        {
+            this.ReplaceOrAddFilter("background_color", color);
             return this;
         }
 
@@ -594,7 +605,7 @@
             {
                 urlParts.Add(this.trim == Thumbor.ImageTrimOption.BottomRight ? "trim:bottom-right" : "trim");
             }
-            
+
             if (!string.IsNullOrEmpty(this.cropCoordinates))
             {
                 urlParts.Add(this.cropCoordinates);
